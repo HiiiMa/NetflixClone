@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//MARK: Models are the DATA
 struct TrendingTitleResponse: Codable {
     let results: [Title]
 }

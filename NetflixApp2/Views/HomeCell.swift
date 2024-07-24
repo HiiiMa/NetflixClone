@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+//MARK: Views are " What The User Sees" (UI)
 class HomeCell: UITableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -26,6 +26,7 @@ class HomeCell: UITableViewCell {
     
     public func configure(with titles: [Title]) {
         self.titles = titles
+        //Because it will be called in an api cal, thus it will be excuted in a background thread, so we call DispatchQueue.main.async to excute it on the main thread since it's a UI call (GCD)
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }

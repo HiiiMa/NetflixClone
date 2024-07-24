@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//MARK: ViewModels are "Part Of The Data That Is Acually Being Viewed On The UI" 
 struct TitlePreviewViewModel {
     let title: String
     let youtubeView: VideoElement
