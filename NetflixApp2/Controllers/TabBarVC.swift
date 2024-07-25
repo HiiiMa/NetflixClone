@@ -17,14 +17,18 @@ class TabBarVC: UITabBarController {
 
     
     func setUpUI(){
-        view.backgroundColor = .systemYellow
+        //view.backgroundColor = .systemYellow
         
         let HomeView = UINavigationController(rootViewController: HomeVC())
+        let Upcoming = UINavigationController(rootViewController: UpcomingVC())
         
         HomeView.tabBarItem.image = UIImage(systemName: "house")
         HomeView.tabBarItem.title = "Home"
         
-        setViewControllers([HomeView], animated: true)
+        Upcoming.tabBarItem.image = UIImage(systemName: "play.circle")
+        Upcoming.tabBarItem.title = "Upcoming"
+        
+        setViewControllers([HomeView,Upcoming], animated: true)
         
         tabBar.tintColor = .label
     }
