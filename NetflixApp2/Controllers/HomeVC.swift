@@ -16,14 +16,22 @@ enum Sections: Int {
 }
 
 class HomeVC: UIViewController {
+//MARK: Variables for API Data:
+    private let dispatchGroup = DispatchGroup()
+    private var trendingMovies: [Title]?
+    private var trendingTv: [Title]?
+    private var popular: [Title]?
+    private var upComming: [Title]?
+    private var topRated: [Title]?
     
     let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
     @IBOutlet weak var tableView: UITableView!
-//MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called every time you display the viewController
+//MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called right before the view is add to it's view hierarchy
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         ConfigureNavBar()
+        GetData()
         
         let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         tableView.tableHeaderView = headerView
@@ -53,6 +61,28 @@ class HomeVC: UIViewController {
         navigationController?.navigationBar.tintColor = .label
 
     }
+    
+    private func GetData(){
+        dispatchGroup.enter()
+        getTrendingMovies { self.dispatchGroup.leave() }
+        
+        dispatchGroup.enter()
+        getTrendingTv { self.dispatchGroup.leave() }
+        
+        dispatchGroup.enter()
+        getPopular { self.dispatchGroup.leave() }
+        
+        dispatchGroup.enter()
+        getUpComming { self.dispatchGroup.leave() }
+        
+        dispatchGroup.enter()
+        getTopRated { self.dispatchGroup.leave() }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.setupView()
+            self.tableView.reloadData()
+        }
+    }
 }
 
 extension HomeVC: UITableViewDelegate,UITableViewDataSource {
@@ -70,63 +100,41 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
         
         switch indexPath.section {
         case Sections.TrendingMovies.rawValue:
-    //MARK: - This closure is marked with @escaping making it able to capture the data and not just dissapear after the function call ends.
-            APICaller.shared.getTrendingMovies { result in
-                switch result {
-                    
-                case .success(let titles):
-                    cell.configure(with: titles)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-            
-            
+            cell.configure(with: trendingMovies ?? [])
+//MARK: - This two lines doesn't effect the app why add/delete them?
+//            cell.collectionView.tag = indexPath.section
+//            cell.collectionView.reloadData()
+            return cell
             
         case Sections.TrendingTv.rawValue:
-            APICaller.shared.getTrendingTvs { result in
-                switch result {
-                case .success(let titles):
-                    cell.configure(with: titles)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        case Sections.Popular.rawValue:
-            APICaller.shared.getPopular { result in
-                switch result {
-                case .success(let titles):
-                    cell.configure(with: titles)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        case Sections.Upcoming.rawValue:
+            cell.configure(with: trendingTv ?? [])
+//            cell.collectionView.tag = indexPath.section
+//            cell.collectionView.reloadData()
+            return cell
             
-            APICaller.shared.getUpcomingMovies { result in
-                switch result {
-                case .success(let titles):
-                    cell.configure(with: titles)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+        case Sections.Popular.rawValue:
+            cell.configure(with: popular ?? [])
+//            cell.collectionView.tag = indexPath.section
+//            cell.collectionView.reloadData()
+            return cell
+            
+        case Sections.Upcoming.rawValue:
+            cell.configure(with: upComming ?? [])
+//            cell.collectionView.tag = indexPath.section
+//            cell.collectionView.reloadData()
+            return cell
             
         case Sections.TopRated.rawValue:
-            APICaller.shared.getTopRated { result in
-                switch result {
-                case .success(let titles):
-                    cell.configure(with: titles)
-                case .failure(let error):
-                    print(error)
-                }
-            }
+            cell.configure(with: topRated ?? [])
+//            cell.collectionView.tag = indexPath.section
+//            cell.collectionView.reloadData()
+            return cell
+            
         default:
             return UITableViewCell()
-
         }
         
-        return cell
+       // return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -152,3 +160,139 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
         header.textLabel?.frame = CGRect(x: header.bounds.origin.x, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
     }
 }
+
+extension HomeVC {
+   //MARK: - Placing API Data in local variables
+    func getTrendingMovies(completion: @escaping ()-> Void){
+        APICaller.shared.getTrendingMovies { [weak self] result in
+            guard let self else{return}
+            switch result {
+            case .success(let titles):
+                trendingMovies = titles
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion()
+            }
+        }
+    }
+    
+    func getTrendingTv(completion: @escaping ()-> Void){
+        APICaller.shared.getTrendingTvs { [weak self] result in
+            guard let self else{return}
+            switch result {
+            case .success(let titles):
+                trendingTv = titles
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion()
+            }
+        }
+    }
+    
+    func getPopular(completion: @escaping ()-> Void){
+        APICaller.shared.getPopular { [weak self] result in
+            guard let self else{return}
+            switch result {
+            case .success(let titles):
+                popular = titles
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion()
+            }
+        }
+    }
+    
+    func getUpComming(completion: @escaping ()-> Void){
+        APICaller.shared.getUpcomingMovies { [weak self] result in
+            guard let self else{return}
+            switch result {
+            case .success(let titles):
+                upComming = titles
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion()
+            }
+        }
+    }
+    
+    func getTopRated(completion: @escaping ()-> Void){
+        APICaller.shared.getTopRated { [weak self] result in
+            guard let self else{return}
+            switch result {
+            case .success(let titles):
+                topRated = titles
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion()
+            }
+        }
+    }
+}
+
+
+/*
+ MARK: - Old API code inside cellForRowAt method:
+ 
+ switch indexPath.section {
+ case Sections.TrendingMovies.rawValue:
+//MARK: - This closure is marked with @escaping making it able to capture the data and not just dissapear after the function call ends.
+     APICaller.shared.getTrendingMovies { result in
+         switch result {
+             
+         case .success(let titles):
+             cell.configure(with: titles)
+         case .failure(let error):
+             print(error.localizedDescription)
+         }
+     }
+     
+     
+     
+ case Sections.TrendingTv.rawValue:
+     APICaller.shared.getTrendingTvs { result in
+         switch result {
+         case .success(let titles):
+             cell.configure(with: titles)
+         case .failure(let error):
+             print(error.localizedDescription)
+         }
+     }
+ case Sections.Popular.rawValue:
+     APICaller.shared.getPopular { result in
+         switch result {
+         case .success(let titles):
+             cell.configure(with: titles)
+         case .failure(let error):
+             print(error.localizedDescription)
+         }
+     }
+ case Sections.Upcoming.rawValue:
+     
+     APICaller.shared.getUpcomingMovies { result in
+         switch result {
+         case .success(let titles):
+             cell.configure(with: titles)
+         case .failure(let error):
+             print(error.localizedDescription)
+         }
+     }
+     
+ case Sections.TopRated.rawValue:
+     APICaller.shared.getTopRated { result in
+         switch result {
+         case .success(let titles):
+             cell.configure(with: titles)
+         case .failure(let error):
+             print(error)
+         }
+     }
+ default:
+     return UITableViewCell()
+
+ }
+ */
