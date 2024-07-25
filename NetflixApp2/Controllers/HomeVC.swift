@@ -15,7 +15,7 @@ enum Sections: Int {
     case TopRated = 4
 }
 
-class HomeVC: UIViewController {
+final class HomeVC: UIViewController {
 //MARK: Variables for API Data:
     private let dispatchGroup = DispatchGroup()
     private var trendingMovies: [Title]?
@@ -24,20 +24,25 @@ class HomeVC: UIViewController {
     private var upComming: [Title]?
     private var topRated: [Title]?
     
-    let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
-    @IBOutlet weak var tableView: UITableView!
+    private let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
+    @IBOutlet private weak var tableView: UITableView!
 //MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called right before the view is add to it's view hierarchy
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         ConfigureNavBar()
         GetData()
-        
+        setupHeaderView()
+    }
+}
+
+private extension HomeVC {
+    func setupHeaderView() {
         let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         tableView.tableHeaderView = headerView
     }
     
-    private func setupView() {
+    func setupView() {
         //when passing a cell:- Create a nib then pass the nib to the register instead of "HomeCell.self"
         let nib = UINib(nibName: String(describing: HomeCell.self), bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "HomeCell")
@@ -49,22 +54,25 @@ class HomeVC: UIViewController {
         tableView.reloadData()
     }
     
-    private func ConfigureNavBar() {
+    func ConfigureNavBar() {
         var image = UIImage(named: "netflix_logo")
         image = image?.withRenderingMode(.alwaysOriginal)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
-        navigationItem.rightBarButtonItems = [
+        navigationItem.rightBarButtonItems = 
+        [
             UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
             UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
-            ]
+        ]
         navigationController?.navigationBar.tintColor = .label
-
     }
     
-    private func GetData(){
+    func GetData(){
         dispatchGroup.enter()
-        getTrendingMovies { self.dispatchGroup.leave() }
+        getTrendingMovies { [weak self] in
+            guard let self else { return }
+            dispatchGroup.leave()
+        }
         
         dispatchGroup.enter()
         getTrendingTv { self.dispatchGroup.leave() }
@@ -78,13 +86,11 @@ class HomeVC: UIViewController {
         dispatchGroup.enter()
         getTopRated { self.dispatchGroup.leave() }
         
-        dispatchGroup.notify(queue: .main) {
-            self.setupView()
+        dispatchGroup.notify(queue: .main) { // Add weak self
             self.tableView.reloadData()
         }
     }
 }
-
 extension HomeVC: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -101,40 +107,22 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
         switch indexPath.section {
         case Sections.TrendingMovies.rawValue:
             cell.configure(with: trendingMovies ?? [])
-//MARK: - This two lines doesn't effect the app why add/delete them?
-//            cell.collectionView.tag = indexPath.section
-//            cell.collectionView.reloadData()
             return cell
-            
         case Sections.TrendingTv.rawValue:
             cell.configure(with: trendingTv ?? [])
-//            cell.collectionView.tag = indexPath.section
-//            cell.collectionView.reloadData()
             return cell
-            
         case Sections.Popular.rawValue:
             cell.configure(with: popular ?? [])
-//            cell.collectionView.tag = indexPath.section
-//            cell.collectionView.reloadData()
             return cell
-            
         case Sections.Upcoming.rawValue:
             cell.configure(with: upComming ?? [])
-//            cell.collectionView.tag = indexPath.section
-//            cell.collectionView.reloadData()
             return cell
-            
         case Sections.TopRated.rawValue:
             cell.configure(with: topRated ?? [])
-//            cell.collectionView.tag = indexPath.section
-//            cell.collectionView.reloadData()
             return cell
-            
         default:
             return UITableViewCell()
         }
-        
-       // return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -16,8 +16,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="400" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cell number " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzB-4I-Dx9">
-                        <rect key="frame" x="152" y="90" width="96.333333333333314" height="20.333333333333329"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Cell number " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzB-4I-Dx9">
+                        <rect key="frame" x="152" y="12" width="96.333333333333314" height="176"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -35,7 +35,9 @@
                     <constraint firstItem="La1-Ak-qF7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="AOy-wY-vUD"/>
                     <constraint firstAttribute="bottom" secondItem="La1-Ak-qF7" secondAttribute="bottom" id="APX-wb-NSX"/>
                     <constraint firstItem="La1-Ak-qF7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="EhB-vG-GtJ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="vzB-4I-Dx9" secondAttribute="bottom" id="Omg-sp-m7A"/>
                     <constraint firstAttribute="trailing" secondItem="La1-Ak-qF7" secondAttribute="trailing" constant="268" id="dKd-1F-B7G"/>
+                    <constraint firstItem="vzB-4I-Dx9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fn8-yV-A86"/>
                     <constraint firstItem="vzB-4I-Dx9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hvi-tH-hF6"/>
                     <constraint firstItem="vzB-4I-Dx9" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="jnj-jN-lua"/>
                     <constraint firstAttribute="trailing" secondItem="pN0-B6-tiS" secondAttribute="trailing" id="t1e-dQ-Udc"/>
