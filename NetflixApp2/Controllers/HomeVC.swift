@@ -19,7 +19,7 @@ class HomeVC: UIViewController {
     
     let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
     @IBOutlet weak var tableView: UITableView!
-    
+//MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called every time you display the viewController
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -70,6 +70,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
         
         switch indexPath.section {
         case Sections.TrendingMovies.rawValue:
+    //MARK: - This closure is marked with @escaping making it able to capture the data and not just dissapear after the function call ends.
             APICaller.shared.getTrendingMovies { result in
                 switch result {
                     

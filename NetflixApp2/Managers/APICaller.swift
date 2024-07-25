@@ -4,7 +4,7 @@
 //
 //  Created by ibrahim alasl on 22/07/2024.
 //
-
+//MARK: - NETWORK CALL:
 import Foundation
 //MARK: - This code is well explained in : https://janviarora.medium.com/urlsession-in-swift-f0f7348e37d5
 //Constants to clean the code of strings
@@ -22,24 +22,28 @@ enum APIError: Error {
 class APICaller {
 //MARK: - Singelton: https://medium.com/@ramdhas/singleton-design-pattern-managing-shared-resources-in-ios-11fb9ade9ab0
     static let shared = APICaller()
-    
+//MARK: Setting the init to "Private" forces the class to create a Singlton.
+    private init(){ }
     
 //MARK: - Fetching DATA
     
     // @escaping is used here, because this is a background task.
     // If you write a print statemnet after the dataTask completes, i.e. after resume(), then it will execute beforehand.
     // This happens because it is time consuming task and can not be implemented on main thread.
-    //@escaping captures data in memeory.
+    //@escaping captures data in memeory, what it actualy does: makes the (Result<[Title], Error>) closure outlive the function that it was called, thus we don't lose the data.
     
+    //MARK: It's a Get func, since we are downloading data
     func getTrendingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
         //We got the Data from the website database
         guard let url = URL(string: "\(Constants.baseURL)/3/trending/movie/day?api_key=\(Constants.API_KEY)") else {return}
+        //MARK: URLSession.shard.dataTask returns three components:                                               Data(Actual data), Response(respnse code ex."200 - 299 SUCCESS , 400 ERROR etc... ),                       Error (what type of error)
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
             guard let data = data, error == nil else {
                 return
             }
-            //creating a JSON object to serialze the data
+        //MARK: After downloading the data we Decode it and put it into our model Result[Title] 
             do {
+        //MARK: If this throws an error, most likely because you didn't match the property names currectly in your model
                 let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
                 completion(.success(results.results))
                 
@@ -47,7 +51,7 @@ class APICaller {
                 completion(.failure(APIError.failedToGetData))
             }
         }
-        
+        //MARK: Runs the function ^
         task.resume()
     }
     

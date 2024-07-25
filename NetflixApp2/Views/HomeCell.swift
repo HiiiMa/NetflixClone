@@ -26,7 +26,7 @@ class HomeCell: UITableViewCell {
     
     public func configure(with titles: [Title]) {
         self.titles = titles
-        //Because it will be called in an api cal, thus it will be excuted in a background thread, so we call DispatchQueue.main.async to excute it on the main thread since it's a UI call (GCD)
+        //Because it will be called in APICaller, thus it will be excuted in a background thread, so we call DispatchQueue.main.async to excute it on the main thread since it's a UI call (GCD), we add [weak self] to make it a weak refrence so we can prevent retain cycles.
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
