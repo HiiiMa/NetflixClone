@@ -15,9 +15,7 @@ class UpcomingCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //posterImageView.image = UIImage(named: "poster")
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -26,14 +24,12 @@ class UpcomingCell: UITableViewCell {
     public func configure(with titles: [Title]) {
         self.titles = titles
     }
-    public func configureImage(with model: String) {
+    public func configureImage(with model: TitleViewModel) {
         
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model)") else {
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterURL)") else {
             return
         }
-        
         posterImageView.sd_setImage(with: url, completed: nil)
+        cellLabel.text = model.titleName
     }
-
-    
 }

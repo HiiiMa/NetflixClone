@@ -27,10 +27,10 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="12n-fP-Pw1" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="PvX-Bo-oUM"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="12n-fP-Pw1" secondAttribute="trailing" id="SeX-z7-4YC"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="12n-fP-Pw1" secondAttribute="bottom" id="aYD-KJ-4QG"/>
-                <constraint firstItem="12n-fP-Pw1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="diB-hw-KWt"/>
+                <constraint firstItem="12n-fP-Pw1" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Hwq-xo-jXH"/>
+                <constraint firstItem="12n-fP-Pw1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="MP1-ae-5iR"/>
+                <constraint firstItem="12n-fP-Pw1" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="VbC-h6-Kgn"/>
+                <constraint firstItem="12n-fP-Pw1" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="h6N-CM-Htv"/>
             </constraints>
             <point key="canvasLocation" x="138" y="20"/>
         </view>

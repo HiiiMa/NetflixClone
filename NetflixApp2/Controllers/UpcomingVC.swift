@@ -44,11 +44,9 @@ extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingCell", for: indexPath) as? UpcomingCell
         else {return UITableViewCell()}
         cell.configure(with: upComing ?? [])
-        
-        guard let model = upComing?[indexPath.row].poster_path else {
-            return UITableViewCell()
-        }
-        cell.configureImage(with: model)
+        guard let model = upComing?[indexPath.row] else {return UITableViewCell() }
+
+        cell.configureImage(with: TitleViewModel(titleName: model.original_title ?? model.original_name ?? "Unknown title", posterURL: model.poster_path ?? ""))
         
         return cell
     }
@@ -77,9 +75,11 @@ extension UpcomingVC {
     func GetData(){
         DispatchQueue.global(qos: .background).async {
             self.getUpcoming {
+    //MARK: - After fetching the data, switch back to main thread and call setupUI.
                 DispatchQueue.main.async { [weak self] in
-                    self?.setupUI()
-                    self?.tableView.reloadData()
+                    guard let self else {return}
+                    setupUI()
+                    tableView.reloadData()
                 }
             }
         }

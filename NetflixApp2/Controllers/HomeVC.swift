@@ -73,21 +73,29 @@ private extension HomeVC {
             guard let self else { return }
             dispatchGroup.leave()
         }
-        
         dispatchGroup.enter()
-        getTrendingTv { self.dispatchGroup.leave() }
-        
+        getTrendingTv { [weak self ] in
+            guard let self else {return }
+            dispatchGroup.leave()
+        }
         dispatchGroup.enter()
-        getPopular { self.dispatchGroup.leave() }
-        
+        getPopular { [weak self] in
+            guard let self else {return }
+            dispatchGroup.leave()
+        }
         dispatchGroup.enter()
-        getUpComming { self.dispatchGroup.leave() }
-        
+        getUpComming { [weak self] in
+            guard let self else {return }
+            dispatchGroup.leave()
+        }
         dispatchGroup.enter()
-        getTopRated { self.dispatchGroup.leave() }
-        
-        dispatchGroup.notify(queue: .main) { // Add weak self
-            self.tableView.reloadData()
+        getTopRated { [weak self] in
+            guard let self else {return }
+            dispatchGroup.leave()
+        }
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let self else {return }
+            tableView.reloadData()
         }
     }
 }
@@ -101,7 +109,6 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
         else {
             return UITableViewCell()
         }
-        
         cell.configureCell()
         
         switch indexPath.section {
