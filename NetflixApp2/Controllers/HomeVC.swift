@@ -154,6 +154,14 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
         header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
         header.textLabel?.frame = CGRect(x: header.bounds.origin.x, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
     }
+    func didTapcell(_ cell: HomeCell, viewModel: TitlePreviewViewModel){
+        DispatchQueue.main.async{[weak self] in
+            guard let self else { return }
+            let vc = PreviewVC()
+            vc.configure(with: viewModel)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
 extension HomeVC {

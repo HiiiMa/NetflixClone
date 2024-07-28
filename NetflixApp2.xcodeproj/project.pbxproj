@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C94533322C56503500A3D919 /* SearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C94533312C56503500A3D919 /* SearchVC.xib */; };
+		C94533332C56503500A3D919 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94533302C56503500A3D919 /* SearchVC.swift */; };
+		C94533362C569CB300A3D919 /* PreviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C94533352C569CB300A3D919 /* PreviewVC.xib */; };
+		C94533372C569CB300A3D919 /* PreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94533342C569CB300A3D919 /* PreviewVC.swift */; };
 		C9711BFF2C525D110083A737 /* UpcomingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9711BFD2C525D110083A737 /* UpcomingVC.swift */; };
 		C9711C002C525D110083A737 /* UpcomingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9711BFE2C525D110083A737 /* UpcomingVC.xib */; };
 		C9711C032C5263450083A737 /* UpcomingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9711C012C5263450083A737 /* UpcomingCell.swift */; };
@@ -36,6 +40,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C94533302C56503500A3D919 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		C94533312C56503500A3D919 /* SearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchVC.xib; sourceTree = "<group>"; };
+		C94533342C569CB300A3D919 /* PreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewVC.swift; sourceTree = "<group>"; };
+		C94533352C569CB300A3D919 /* PreviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewVC.xib; sourceTree = "<group>"; };
 		C9711BFD2C525D110083A737 /* UpcomingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingVC.swift; sourceTree = "<group>"; };
 		C9711BFE2C525D110083A737 /* UpcomingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpcomingVC.xib; sourceTree = "<group>"; };
 		C9711C012C5263450083A737 /* UpcomingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingCell.swift; sourceTree = "<group>"; };
@@ -118,6 +126,10 @@
 				C9D3B7352C4F91CF00229418 /* HomeVC.xib */,
 				C9711BFD2C525D110083A737 /* UpcomingVC.swift */,
 				C9711BFE2C525D110083A737 /* UpcomingVC.xib */,
+				C94533302C56503500A3D919 /* SearchVC.swift */,
+				C94533312C56503500A3D919 /* SearchVC.xib */,
+				C94533342C569CB300A3D919 /* PreviewVC.swift */,
+				C94533352C569CB300A3D919 /* PreviewVC.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -243,9 +255,11 @@
 				C9711C002C525D110083A737 /* UpcomingVC.xib in Resources */,
 				C9711C042C5263450083A737 /* UpcomingCell.xib in Resources */,
 				C9D3B7192C4F8FEE00229418 /* Base in Resources */,
+				C94533362C569CB300A3D919 /* PreviewVC.xib in Resources */,
 				C9D3B7442C4FB82D00229418 /* TestCollectionCell.xib in Resources */,
 				C9D3B7142C4F8FED00229418 /* Base in Resources */,
 				C9D3B73E2C4FA15100229418 /* HomeCell.xib in Resources */,
+				C94533322C56503500A3D919 /* SearchVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9D3B7262C4F903700229418 /* YoutubeSearchResponse.swift in Sources */,
+				C94533372C569CB300A3D919 /* PreviewVC.swift in Sources */,
 				C9D3B7452C4FB82D00229418 /* TestCollectionCell.swift in Sources */,
 				C9D3B7112C4F8FED00229418 /* TabBarVC.swift in Sources */,
 				C9D3B7272C4F903700229418 /* Title.swift in Sources */,
@@ -271,6 +286,7 @@
 				C9D3B72C2C4F904B00229418 /* TitleViewModel.swift in Sources */,
 				C9711BFF2C525D110083A737 /* UpcomingVC.swift in Sources */,
 				C9D3B7412C4FAA3C00229418 /* HeaderView.swift in Sources */,
+				C94533332C56503500A3D919 /* SearchVC.swift in Sources */,
 				C9711C032C5263450083A737 /* UpcomingCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

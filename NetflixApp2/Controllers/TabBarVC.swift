@@ -21,7 +21,7 @@ class TabBarVC: UITabBarController {
         
         let HomeView = UINavigationController(rootViewController: HomeVC())
         let Upcoming = UINavigationController(rootViewController: UpcomingVC())
-        let Search = UINavigationController(rootViewController: UIViewController())
+        let Search = UINavigationController(rootViewController: SearchVC())
         let Downloads = UINavigationController(rootViewController: UIViewController())
         
         HomeView.tabBarItem.image = UIImage(systemName: "house")
