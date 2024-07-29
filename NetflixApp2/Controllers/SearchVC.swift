@@ -13,7 +13,7 @@ class SearchVC: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
     //MARK: - Variables
-    private var upComing: [Title]?
+    private var discover: [Title]?
     private var searchedResults: [Title] = []
     // This is a flag that determines if to show all the results or only the searched results
     private var isSearching = false {
@@ -23,8 +23,7 @@ class SearchVC: UIViewController, UISearchBarDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        GetData()
+        getData()
     }
     
     private func setupUI(){
@@ -34,7 +33,7 @@ class SearchVC: UIViewController, UISearchBarDelegate {
         
         let nib = UINib(nibName: String(describing: UpcomingCell.self), bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "UpcomingCell")
-        
+        searchedResults = discover ?? []
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -47,19 +46,16 @@ class SearchVC: UIViewController, UISearchBarDelegate {
 
 extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        activeDataset().count
+        searchedResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingCell", for: indexPath) as? UpcomingCell
         else {return UITableViewCell()}
-        cell.configure(with: upComing ?? [])
-        guard let model = upComing?[indexPath.row] else {return UITableViewCell() }
+        cell.configure(with: searchedResults)
+        let model = searchedResults[indexPath.row]
         
         cell.configureImage(with: TitleViewModel(titleName: model.original_title ?? model.original_name ?? "Unknown title", posterURL: model.poster_path ?? ""))
-//MARK: - SearchBar vars:
-        let titles = activeDataset()
-        _ = titles[indexPath.row] // Get data for the row
         
         return cell
     }
@@ -70,12 +66,12 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
 }
 //MARK: - Fetching PosterImage Data:
 extension SearchVC {
-    func getUpcoming(completion: @escaping ()-> ()){
-        APICaller.shared.getUpcomingMovies { [weak self] result in
+    func getDiscover(completion: @escaping ()-> ()){
+        APICaller.shared.getDiscoverMovies { [weak self] result in
             guard let self else {return}
             switch result{
             case .success(let titles):
-                upComing = titles
+                discover = titles
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -85,9 +81,9 @@ extension SearchVC {
         }
     }
     
-    func GetData(){
+    func getData(){
         DispatchQueue.global(qos: .background).async {
-            self.getUpcoming {
+            self.getDiscover {
                 //MARK: - After fetching the data, switch back to main thread and call setupUI.
                 DispatchQueue.main.async { [weak self] in
                     guard let self else {return}
@@ -103,26 +99,20 @@ extension SearchVC {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard searchText != "" else{
             isSearching = false
-            searchedResults.removeAll()
+            searchedResults = discover ?? []
             return
         }
         searchedResults = filteredTitles(query: searchText)
         isSearching = true
         
     }
-    /// Retuns active dataset based on the search state
-    func activeDataset() -> [Title] {
-        if isSearching {
-            return searchedResults
-        } else {
-            return upComing ?? []
-        }
-    }
-    /// Returns a list of univerties matching given query
+    
+    /// Returns a list of titles matching given query
     /// Logical Error, search results is wrong
     func filteredTitles(query: String) -> [Title] {
-        return upComing?.filter { ($0.original_title!).range(of: searchBar.text ?? "", options: [ .caseInsensitive, .diacriticInsensitive ]) != nil } ?? []
+        return discover?.filter { ($0.original_title!).range(of: searchBar.text ?? "", options: [ .caseInsensitive, .diacriticInsensitive ]) != nil } ?? []
     }
 }
+
 
 

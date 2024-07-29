@@ -48,7 +48,6 @@ extension HomeCell: UICollectionViewDelegate,UICollectionViewDataSource {
         
         return cell
     }
-
 //    // This Function can setup collectionView layout using UICollectionViewDelegateFlowLayout
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,              sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        .init(width: 20, height: 20)
