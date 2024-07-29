@@ -18,11 +18,11 @@ class PreviewVC: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupUI()
     }
     
     private func setupUI(){
-        title = "Downloads"
+        title = "Preview"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode  = .always
     }

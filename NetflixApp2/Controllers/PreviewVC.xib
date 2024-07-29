@@ -11,8 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewVC" customModule="NetflixApp2" customModuleProvider="target">
             <connections>
                 <outlet property="downloadButton" destination="F7c-LM-aBk" id="Cml-7B-vR1"/>
+                <outlet property="movieTitle" destination="LBd-h8-oVl" id="sWN-dL-F6i"/>
                 <outlet property="preview" destination="XA0-zQ-izm" id="Gj4-fV-grE"/>
-                <outlet property="title" destination="LBd-h8-oVl" id="LYg-sf-6b6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="R5A-ED-74X" id="voV-wl-G7F"/>
             </connections>
