@@ -55,7 +55,7 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: searchedResults)
         let model = searchedResults[indexPath.row]
         
-        cell.configureImage(with: TitleViewModel(titleName: model.original_title ?? model.original_name ?? "Unknown title", posterURL: model.poster_path ?? ""))
+        cell.configureImage(with: TitleModel(titleName: model.original_title ?? model.original_name ?? "Unknown title", posterURL: model.poster_path ?? ""))
         
         return cell
     }

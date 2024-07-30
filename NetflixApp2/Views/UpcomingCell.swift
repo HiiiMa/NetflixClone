@@ -24,7 +24,7 @@ class UpcomingCell: UITableViewCell {
     public func configure(with titles: [Title]) {
         self.titles = titles
     }
-    public func configureImage(with model: TitleViewModel) {
+    public func configureImage(with model: TitleModel) {
         
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterURL)") else {
             return

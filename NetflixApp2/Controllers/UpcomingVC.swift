@@ -46,7 +46,7 @@ extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: upComing ?? [])
         guard let model = upComing?[indexPath.row] else {return UITableViewCell() }
 
-        cell.configureImage(with: TitleViewModel(titleName: model.original_title ?? model.original_name ?? "Unknown title", posterURL: model.poster_path ?? ""))
+        cell.configureImage(with: TitleModel(titleName: model.original_title ?? model.original_name ?? "Unknown title", posterURL: model.poster_path ?? ""))
         
         return cell
     }
