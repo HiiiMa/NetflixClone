@@ -231,13 +231,11 @@ extension HomeVC {
     }
 }
 extension HomeVC: HomeCellDelegate {
-    func HomeCellDidTapCell(_ cell: HomeCell, viewModel: TitlePreviewViewModel) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {return }
-            let vc = PreviewVC()
-            vc.configure(with: viewModel)
-            navigationController?.pushViewController(vc, animated: true)
-        }
+    func homeCellDidTapCell(model: Title) {
+        let storyboard = UIStoryboard(name: "PreviewVC", bundle: Bundle.main)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
+        vc.movieData = model
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

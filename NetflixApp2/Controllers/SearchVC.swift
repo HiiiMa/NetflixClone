@@ -63,6 +63,13 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         140
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = searchedResults[indexPath.row]
+        let storyBoard = UIStoryboard(name: "PreviewVC", bundle: Bundle.main)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
+        vc.movieData = model
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 //MARK: - Fetching PosterImage Data:
 extension SearchVC {

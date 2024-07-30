@@ -1,25 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--PreviewVC-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PreviewVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="PreviewVC" customModule="NetflixApp2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="ISJ-gh-FbN">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <subviews>
+                                    <wkWebView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="sph-Cn-ggG">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="350"/>
+                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <wkWebViewConfiguration key="configuration">
+                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                            <wkPreferences key="preferences"/>
+                                        </wkWebViewConfiguration>
+                                    </wkWebView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZ6-4h-CUL">
+                                        <rect key="frame" x="20" y="398" width="353" height="20.333333333333314"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Preview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKg-z7-MQi">
+                                        <rect key="frame" x="20" y="466.33333333333331" width="353" height="206.33333333333331"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z23-3N-EXh">
+                                        <rect key="frame" x="146.66666666666666" y="720.66666666666663" width="100" height="38.333333333333371"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Download"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="sph-Cn-ggG" firstAttribute="top" secondItem="ISJ-gh-FbN" secondAttribute="top" id="79Q-Zn-fbT"/>
+                                    <constraint firstItem="sph-Cn-ggG" firstAttribute="leading" secondItem="ISJ-gh-FbN" secondAttribute="leading" id="FRT-Zq-y8E"/>
+                                    <constraint firstItem="cKg-z7-MQi" firstAttribute="leading" secondItem="ISJ-gh-FbN" secondAttribute="leading" constant="20" id="H1A-Bk-nyP"/>
+                                    <constraint firstAttribute="trailing" secondItem="KZ6-4h-CUL" secondAttribute="trailing" constant="20" symbolic="YES" id="lX9-Ed-7EJ"/>
+                                    <constraint firstItem="KZ6-4h-CUL" firstAttribute="leading" secondItem="ISJ-gh-FbN" secondAttribute="leading" constant="20" id="quq-Xx-81q"/>
+                                    <constraint firstAttribute="trailing" secondItem="sph-Cn-ggG" secondAttribute="trailing" id="xZ2-hm-XaP"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ISJ-gh-FbN" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="TzJ-Ui-pp1"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="ISJ-gh-FbN" secondAttribute="bottom" id="W6V-wd-2PG"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="ISJ-gh-FbN" secondAttribute="trailing" id="enh-pP-SLg"/>
+                            <constraint firstItem="ISJ-gh-FbN" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="fcx-D8-5Y0"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="downloadButton" destination="z23-3N-EXh" id="PvG-aY-6bs"/>
+                        <outlet property="movieTitle" destination="KZ6-4h-CUL" id="ro8-3v-GS5"/>
+                        <outlet property="preview" destination="cKg-z7-MQi" id="y4g-rQ-3iC"/>
+                        <outlet property="webView" destination="sph-Cn-ggG" id="3hS-WJ-Y47"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="28" y="-2"/>
         </scene>
     </scenes>
     <resources>

@@ -54,6 +54,13 @@ extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         140
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = upComing?[indexPath.row]
+        let storyboard = UIStoryboard(name: "PreviewVC", bundle: Bundle.main)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
+        vc.movieData = model
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 //MARK: - Fetching PosterImage Data:
 extension UpcomingVC {
