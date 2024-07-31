@@ -70,6 +70,7 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         vc.movieData = model
         navigationController?.pushViewController(vc, animated: true)
     }
+
 }
 //MARK: - Fetching PosterImage Data:
 extension SearchVC {

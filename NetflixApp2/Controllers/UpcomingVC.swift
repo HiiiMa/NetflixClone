@@ -61,6 +61,7 @@ extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
         vc.movieData = model
         navigationController?.pushViewController(vc, animated: true)
     }
+
 }
 //MARK: - Fetching PosterImage Data:
 extension UpcomingVC {
