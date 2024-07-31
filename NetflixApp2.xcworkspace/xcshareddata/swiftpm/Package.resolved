@@ -1,0 +1,24 @@
+{
+  "originHash" : "c0a7e586d1abfa834a0e2aa5ad98c5972fbb1a68df492f4102619dd80251cc52",
+  "pins" : [
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "86e9185ef41c4238a93ad8efe61ddeb701e80bbf",
+        "version" : "5.19.5"
+      }
+    },
+    {
+      "identity" : "swiftloader",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/leoru/SwiftLoader.git",
+      "state" : {
+        "revision" : "3d03ac07764075bfab4c9ce9d5ba4556d6af350e",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 3
+}

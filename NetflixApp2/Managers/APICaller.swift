@@ -5,6 +5,7 @@
 //  Created by ibrahim alasl on 22/07/2024.
 //
 //MARK: - NETWORK CALL:
+import Alamofire
 import Foundation
 //MARK: - This code is well explained in : https://janviarora.medium.com/urlsession-in-swift-f0f7348e37d5
 //Constants to clean the code of strings
@@ -36,7 +37,10 @@ class APICaller {
     func getTrendingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
         //Get the Data from the website database
         guard let url = URL(string: "\(Constants.baseURL)/3/trending/movie/day?api_key=\(Constants.API_KEY)") else {return}
-        //MARK: URLSession.shard.dataTask returns three components:                                               Data(Actual data),                                                                                            Response(respnse code ex."200 - 299 SUCCESS , 400 ERROR etc... ),                                         Error (what type of error)
+        //MARK: URLSession.shard.dataTask returns three components:
+        //Data(Actual data),
+        //Response(respnse code ex."200 - 299 SUCCESS , 400 ERROR etc... ),
+        //Error (what type of error)
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
             guard let data = data, error == nil else {
                 return
