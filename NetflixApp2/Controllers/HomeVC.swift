@@ -16,18 +16,20 @@ enum Sections: Int {
 }
 
 final class HomeVC: UIViewController {
-//MARK: Variables for API Data:
+    //MARK: Variables for API Data:
+    private let semaphore = DispatchSemaphore(value: 0)
     private let dispatchGroup = DispatchGroup()
     private var trendingMovies: [Title]?
     private var trendingTv: [Title]?
     private var popular: [Title]?
     private var upComming: [Title]?
     private var topRated: [Title]?
-        
+    private var randomMovie: String?
+    
     private let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
     
     @IBOutlet private weak var tableView: UITableView!
-//MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called right before the view is add to it's view hierarchy
+    //MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called right before the view is add to it's view hierarchy
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -40,9 +42,16 @@ final class HomeVC: UIViewController {
 private extension HomeVC {
     func setupHeaderView() {
         let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        var model = ""
+        getTrendingMovies { [weak self] in
+            guard let self else { return }
+            model = trendingMovies?.first?.poster_path ?? ""
+            semaphore.signal()
+        }
+        semaphore.wait()
+        headerView.configure(with: model)
         tableView.tableHeaderView = headerView
     }
-    
     func setupView() {
         //when passing a cell:- Create a nib then pass the nib to the register instead of "HomeCell.self"
         let nib = UINib(nibName: String(describing: HomeCell.self), bundle: nil)
@@ -50,8 +59,7 @@ private extension HomeVC {
         
         tableView.delegate = self
         tableView.dataSource = self
-        //view.backgroundColor = .systemBackground
-        
+
         tableView.reloadData()
     }
     
@@ -60,7 +68,7 @@ private extension HomeVC {
         image = image?.withRenderingMode(.alwaysOriginal)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
-        navigationItem.rightBarButtonItems = 
+        navigationItem.rightBarButtonItems =
         [
             UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
             UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
@@ -159,7 +167,7 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
 }
 
 extension HomeVC {
-   //MARK: - Placing API Data in local variables
+    //MARK: - Placing API Data in local variables
     func getTrendingMovies(completion: @escaping ()-> Void){
         APICaller.shared.getTrendingMovies { [weak self] result in
             guard let self else{return}
@@ -245,59 +253,59 @@ extension HomeVC: HomeCellDelegate {
  
  switch indexPath.section {
  case Sections.TrendingMovies.rawValue:
-//MARK: - This closure is marked with @escaping making it able to capture the data and not just dissapear after the function call ends.
-     APICaller.shared.getTrendingMovies { result in
-         switch result {
-             
-         case .success(let titles):
-             cell.configure(with: titles)
-         case .failure(let error):
-             print(error.localizedDescription)
-         }
-     }
-     
-     
-     
+ //MARK: - This closure is marked with @escaping making it able to capture the data and not just dissapear after the function call ends.
+ APICaller.shared.getTrendingMovies { result in
+ switch result {
+ 
+ case .success(let titles):
+ cell.configure(with: titles)
+ case .failure(let error):
+ print(error.localizedDescription)
+ }
+ }
+ 
+ 
+ 
  case Sections.TrendingTv.rawValue:
-     APICaller.shared.getTrendingTvs { result in
-         switch result {
-         case .success(let titles):
-             cell.configure(with: titles)
-         case .failure(let error):
-             print(error.localizedDescription)
-         }
-     }
+ APICaller.shared.getTrendingTvs { result in
+ switch result {
+ case .success(let titles):
+ cell.configure(with: titles)
+ case .failure(let error):
+ print(error.localizedDescription)
+ }
+ }
  case Sections.Popular.rawValue:
-     APICaller.shared.getPopular { result in
-         switch result {
-         case .success(let titles):
-             cell.configure(with: titles)
-         case .failure(let error):
-             print(error.localizedDescription)
-         }
-     }
+ APICaller.shared.getPopular { result in
+ switch result {
+ case .success(let titles):
+ cell.configure(with: titles)
+ case .failure(let error):
+ print(error.localizedDescription)
+ }
+ }
  case Sections.Upcoming.rawValue:
-     
-     APICaller.shared.getUpcomingMovies { result in
-         switch result {
-         case .success(let titles):
-             cell.configure(with: titles)
-         case .failure(let error):
-             print(error.localizedDescription)
-         }
-     }
-     
+ 
+ APICaller.shared.getUpcomingMovies { result in
+ switch result {
+ case .success(let titles):
+ cell.configure(with: titles)
+ case .failure(let error):
+ print(error.localizedDescription)
+ }
+ }
+ 
  case Sections.TopRated.rawValue:
-     APICaller.shared.getTopRated { result in
-         switch result {
-         case .success(let titles):
-             cell.configure(with: titles)
-         case .failure(let error):
-             print(error)
-         }
-     }
+ APICaller.shared.getTopRated { result in
+ switch result {
+ case .success(let titles):
+ cell.configure(with: titles)
+ case .failure(let error):
+ print(error)
+ }
+ }
  default:
-     return UITableViewCell()
-
+ return UITableViewCell()
+ 
  }
  */

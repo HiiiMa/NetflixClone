@@ -80,6 +80,14 @@ class HeaderView: UIView {
         NSLayoutConstraint.activate(playButtonConstraints)
         NSLayoutConstraint.activate(downloadButtonConstraints)
     }
+    public func configure(with model: String) {
+        
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model)") else {
+            return
+        }
+        
+        headerImage.sd_setImage(with: url, completed: nil)
+    }
 }
 
 
