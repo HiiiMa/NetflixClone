@@ -43,8 +43,8 @@
 
 /* Begin PBXFileReference section */
 		A655BEE3A1B20FBB2E2AECA3 /* Pods-NetflixApp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetflixApp2.release.xcconfig"; path = "Target Support Files/Pods-NetflixApp2/Pods-NetflixApp2.release.xcconfig"; sourceTree = "<group>"; };
-		C92E05522C58E900007AE20D /* TitlePreviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitlePreviewModel.swift; sourceTree = "<group>"; };
-		C92E05532C58E900007AE20D /* TitleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleModel.swift; sourceTree = "<group>"; };
+		C92E05522C58E900007AE20D /* TitlePreviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TitlePreviewModel.swift; path = ../ViewModels/TitlePreviewModel.swift; sourceTree = "<group>"; };
+		C92E05532C58E900007AE20D /* TitleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TitleModel.swift; path = ../ViewModels/TitleModel.swift; sourceTree = "<group>"; };
 		C92E05562C58EDE0007AE20D /* PreviewVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PreviewVC.storyboard; sourceTree = "<group>"; };
 		C94533302C56503500A3D919 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		C94533312C56503500A3D919 /* SearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchVC.xib; sourceTree = "<group>"; };
@@ -133,7 +133,6 @@
 				C9D3B7332C4F90C700229418 /* Resources */,
 				C9D3B7322C4F908700229418 /* Managers */,
 				C9D3B7312C4F907D00229418 /* Views */,
-				C9D3B7302C4F907600229418 /* ViewModels */,
 				C9D3B72F2C4F907000229418 /* Models */,
 				C9D3B72E2C4F906700229418 /* Controllers */,
 				C9D3B7152C4F8FEE00229418 /* Assets.xcassets */,
@@ -163,19 +162,12 @@
 		C9D3B72F2C4F907000229418 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C92E05522C58E900007AE20D /* TitlePreviewModel.swift */,
 				C9D3B7252C4F903700229418 /* Title.swift */,
+				C92E05532C58E900007AE20D /* TitleModel.swift */,
 				C9D3B7242C4F903700229418 /* YoutubeSearchResponse.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		C9D3B7302C4F907600229418 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				C92E05522C58E900007AE20D /* TitlePreviewModel.swift */,
-				C92E05532C58E900007AE20D /* TitleModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		C9D3B7312C4F907D00229418 /* Views */ = {
