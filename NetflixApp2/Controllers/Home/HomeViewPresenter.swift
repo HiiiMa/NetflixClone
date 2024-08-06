@@ -31,12 +31,6 @@ class HomeViewPresenter {
     //MARK: Variables for API Data:
     private var view: HomeViewPresenterProtocol?
     private let dispatchGroup = DispatchGroup()
-    private var trendingMovies: [Title]?
-    private var trendingTv: [Title]?
-    private var popular: [Title]?
-    private var upComming: [Title]?
-    private var topRated: [Title]?
-    private var randomMovie: String?
     private var headerViewImage: String?
     
    
@@ -52,33 +46,33 @@ class HomeViewPresenter {
     
     private func getData() {
         dispatchGroup.enter()
-        getTrendingMovies { movies in
-            self.view?.getTrendingMovies(titles: movies)
+        getTrendingMovies { titles in
+            self.view?.getTrendingMovies(titles: titles)
+            self.headerViewImage = titles.first?.poster_path ?? ""
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
-        getTrendingTv { movies in
-            self.view?.getTrendingTv(titles: movies)
+        getTrendingTv { titles in
+            self.view?.getTrendingTv(titles: titles)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
-        getPopular { movies in
-            self.view?.getPopular(titles: movies)
+        getPopular { titles in
+            self.view?.getPopular(titles: titles)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
-        getUpComming { movies in
-            self.view?.getUpComming(titles: movies)
+        getUpComming { titles in
+            self.view?.getUpComming(titles: titles)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
-        getTopRated { movies in
-            self.view?.getTopRated(titles: movies)
+        getTopRated { titles in
+            self.view?.getTopRated(titles: titles )
             self.dispatchGroup.leave()
         }
         dispatchGroup.notify(queue: .main) { [weak self] in
             guard let self else {return }
-            headerViewImage = trendingMovies?.first?.poster_path ?? ""
             self.view?.setupHeaderView(headerViewImage: headerViewImage)
         }
     }
@@ -88,8 +82,7 @@ class HomeViewPresenter {
             guard let self else{return}
             switch result {
             case .success(let titles):
-                trendingMovies = titles
-                completion(trendingMovies ?? [])
+                completion(titles)
             case .failure(let error):
                 print(error.localizedDescription)
                 completion([])
@@ -102,8 +95,7 @@ class HomeViewPresenter {
             guard let self else{return}
             switch result {
             case .success(let titles):
-                trendingTv = titles
-                completion(trendingTv ?? [])
+                completion(titles)
             case .failure(let error):
                 print(error.localizedDescription)
                 completion([])
@@ -116,8 +108,7 @@ class HomeViewPresenter {
             guard let self else{return}
             switch result {
             case .success(let titles):
-                popular = titles
-                completion(popular ?? [])
+                completion(titles)
             case .failure(let error):
                 print(error.localizedDescription)
                 completion([])
@@ -130,8 +121,7 @@ class HomeViewPresenter {
             guard let self else{return}
             switch result {
             case .success(let titles):
-                upComming = titles
-                completion(upComming ?? [])
+                completion(titles)
             case .failure(let error):
                 print(error.localizedDescription)
                 completion([])
@@ -143,8 +133,7 @@ class HomeViewPresenter {
             guard let self else{return}
             switch result {
             case .success(let titles):
-                topRated = titles
-                completion(topRated ?? [])
+                completion(titles)
             case .failure(let error):
                 print(error.localizedDescription)
                 completion([])
