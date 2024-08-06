@@ -7,23 +7,24 @@
 
 import UIKit
 
-protocol HomeViewProtocol: AnyObject {
-    func setupHeaderView()
-}
-
 final class HomeVC: UIViewController {
     
-    private var presenter: HomeViewPresenterProtocol!
- 
+    private var presenter: HomeViewPresenter?
+    private var trendingMovies: [Title]?
+    private var trendingTv: [Title]?
+    private var popular: [Title]?
+    private var upComming: [Title]?
+    private var topRated: [Title]?
+    
     @IBOutlet private weak var tableView: UITableView!
     //MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called right before the view is add to it's view hierarchy
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         presenter = HomeViewPresenter(view: self)
-        presenter.getData()
+        presenter?.viewDidLoad()
         ConfigureNavBar()
-        setupHeaderView()
+        //setupHeaderView()
     }
 }
 
@@ -68,19 +69,19 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
         
         switch indexPath.section {
         case Sections.TrendingMovies.rawValue:
-            cell.configure(with: presenter.trendingMovies ?? [])
+            cell.configure(with: trendingMovies ?? [])
             return cell
         case Sections.TrendingTv.rawValue:
-            cell.configure(with: presenter.trendingTv ?? [])
+            cell.configure(with: trendingTv ?? [])
             return cell
         case Sections.Popular.rawValue:
-            cell.configure(with: presenter.popular ?? [])
+            cell.configure(with: popular ?? [])
             return cell
         case Sections.Upcoming.rawValue:
-            cell.configure(with: presenter.upComming ?? [])
+            cell.configure(with: upComming ?? [])
             return cell
         case Sections.TopRated.rawValue:
-            cell.configure(with: presenter.topRated ?? [])
+            cell.configure(with: topRated ?? [])
             return cell
         default:
             return UITableViewCell()
@@ -120,11 +121,49 @@ extension HomeVC: HomeCellDelegate{
     }
 }
 
-extension HomeVC: HomeViewProtocol {
-    func setupHeaderView() {
+extension HomeVC: HomeViewPresenterProtocol {
+    func getTrendingTv(titles: [Title]) {
+        DispatchQueue.main.async{[weak self] in
+            guard self != nil else{return }
+            self?.trendingMovies = titles
+            self?.tableView.reloadData()
+            }
+    }
+    
+    func getPopular(titles: [Title]) {
+        DispatchQueue.main.async{[weak self] in
+            guard self != nil else{return }
+            self?.trendingTv = titles
+            self?.tableView.reloadData()
+            }
+    }
+    
+    func getUpComming(titles: [Title]) {
+        DispatchQueue.main.async{[weak self] in
+            guard self != nil else{return }
+            self?.popular = titles
+            self?.tableView.reloadData()
+            }
+    }
+    
+    func getTopRated(titles: [Title]) {
+        DispatchQueue.main.async{[weak self] in
+            guard self != nil else{return }
+            self?.upComming = titles
+            self?.tableView.reloadData()
+            }
+    }
+    
+    func getTrendingMovies(titles: [Title]) {
+        DispatchQueue.main.async{[weak self] in
+            guard self != nil else{return }
+            self?.topRated = titles
+            self?.tableView.reloadData()
+            }
+    }
+    func setupHeaderView(headerViewImage: String?) {
         let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
-        let model = presenter.headerViewImage ?? ""
-        headerView.configure(with: model)
+        headerView.configure(with: headerViewImage ?? "")
         tableView.tableHeaderView = headerView
         tableView.reloadData()
     }

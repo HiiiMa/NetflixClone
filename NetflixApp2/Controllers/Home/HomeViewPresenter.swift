@@ -19,18 +19,17 @@ enum Sections: Int {
 let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
 
 protocol HomeViewPresenterProtocol {
-    func getData()
-    var headerViewImage: String? { get  }
-    var trendingMovies: [Title]? { get  }
-    var trendingTv: [Title]? { get  }
-    var popular: [Title]? { get  }
-    var upComming: [Title]? { get  }
-    var topRated: [Title]? { get  }
+    func getTrendingMovies(titles: [Title])
+    func getTrendingTv(titles: [Title])
+    func getPopular(titles: [Title])
+    func getUpComming(titles: [Title])
+    func getTopRated(titles: [Title])
+    func setupHeaderView(headerViewImage: String?)
 }
 
-class HomeViewPresenter: HomeViewPresenterProtocol{
+class HomeViewPresenter {
     //MARK: Variables for API Data:
-    private weak var view: HomeViewProtocol?
+    private var view: HomeViewPresenterProtocol?
     private let dispatchGroup = DispatchGroup()
     var trendingMovies: [Title]?
     var trendingTv: [Title]?
@@ -39,43 +38,48 @@ class HomeViewPresenter: HomeViewPresenterProtocol{
     var topRated: [Title]?
     var randomMovie: String?
     var headerViewImage: String?
+    
    
     
-    init(view: HomeViewProtocol?) {
+    init(view: HomeViewPresenterProtocol?) {
         self.view = view
 
+    }
+    
+    func viewDidLoad(){
+        getData()
     }
     
     func getData() {
         dispatchGroup.enter()
         getTrendingMovies { movies in
-            self.trendingMovies = movies
+            self.view?.getTrendingMovies(titles: movies)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
         getTrendingTv { movies in
-            self.trendingTv = movies
+            self.view?.getTrendingTv(titles: movies)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
         getPopular { movies in
-            self.popular = movies
+            self.view?.getPopular(titles: movies)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
         getUpComming { movies in
-            self.upComming = movies
+            self.view?.getUpComming(titles: movies)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
         getTopRated { movies in
-            self.topRated = movies
+            self.view?.getTopRated(titles: movies)
             self.dispatchGroup.leave()
         }
         dispatchGroup.notify(queue: .main) { [weak self] in
             guard let self else {return }
             headerViewImage = trendingMovies?.first?.poster_path ?? ""
-            self.view?.setupHeaderView()
+            self.view?.setupHeaderView(headerViewImage: headerViewImage)
         }
     }
     
