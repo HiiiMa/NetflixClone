@@ -11,7 +11,7 @@ protocol UpcomingViewPresenterProtocol: AnyObject {
 }
 
 class UpcomingViewPresenter {
- 
+    
     private var view: UpcomingViewPresenterProtocol?
     
     init(view: UpcomingViewPresenterProtocol?) {

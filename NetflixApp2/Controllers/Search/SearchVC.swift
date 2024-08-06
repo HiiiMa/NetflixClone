@@ -15,6 +15,7 @@ class SearchVC: UIViewController, UISearchBarDelegate {
     //MARK: - Variables
     private var discover: [Title]?
     private var searchedResults: [Title] = []
+    private var presenter: SearchViewPresenter!
     // This is a flag that determines if to show all the results or only the searched results
     private var isSearching = false {
         didSet{
@@ -23,7 +24,9 @@ class SearchVC: UIViewController, UISearchBarDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        getData()
+        setupUI()
+        presenter = SearchViewPresenter(view: self)
+        presenter.viewDidLoad()
     }
     
     private func setupUI(){
@@ -33,7 +36,6 @@ class SearchVC: UIViewController, UISearchBarDelegate {
         
         let nib = UINib(nibName: String(describing: UpcomingCell.self), bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "UpcomingCell")
-        searchedResults = discover ?? []
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -72,34 +74,11 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     }
 
 }
-//MARK: - Fetching PosterImage Data:
-extension SearchVC {
-    func getDiscover(completion: @escaping ()-> ()){
-        APICaller.shared.getDiscoverMovies { [weak self] result in
-            guard let self else {return}
-            switch result{
-            case .success(let titles):
-                discover = titles
-                completion()
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion()
-            }
-            
-        }
-    }
-    
-    func getData(){
-        DispatchQueue.global(qos: .background).async {
-            self.getDiscover {
-                //MARK: - After fetching the data, switch back to main thread and call setupUI.
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else {return}
-                    setupUI()
-                    tableView.reloadData()
-                }
-            }
-        }
+extension SearchVC: searchViewPresenterProtocol {
+    func getData(titles: [Title]) {
+        discover = titles
+        searchedResults = discover ?? []
+        tableView.reloadData()
     }
 }
 //MARK: - Setting up SearchBar:
