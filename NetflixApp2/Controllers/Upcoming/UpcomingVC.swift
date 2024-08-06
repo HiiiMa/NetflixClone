@@ -8,17 +8,20 @@
 import UIKit
 
 final class UpcomingVC: UIViewController {
+    
     //MARK: - Outles
     @IBOutlet private weak var tableView: UITableView!
     //MARK: - Variables
-    private var upComing: [Title]?
+    private var presenter: UpcomingViewPresenter!
     
+    var upComing: [Title]?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        GetData()
+        presenter = UpcomingViewPresenter(view: self)
+        presenter.viewDidLoad()
     }
-    
+
     private func setupUI(){
         title = "Upcoming"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -29,7 +32,6 @@ final class UpcomingVC: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.reloadData()
     }
     
@@ -61,35 +63,11 @@ extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
         vc.movieData = model
         navigationController?.pushViewController(vc, animated: true)
     }
-
 }
-//MARK: - Fetching PosterImage Data:
-extension UpcomingVC {
-    func getUpcoming(completion: @escaping ()-> ()){
-        APICaller.shared.getUpcomingMovies { [weak self] result in
-            guard let self else {return}
-            switch result{
-            case .success(let titles):
-                upComing = titles
-                completion()
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion()
-            }
-            
-        }
-    }
-    
-    func GetData(){
-        DispatchQueue.global(qos: .background).async {
-            self.getUpcoming {
-    //MARK: - After fetching the data, switch back to main thread and call setupUI.
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else {return}
-                    setupUI()
-                    tableView.reloadData()
-                }
-            }
-        }
+
+extension UpcomingVC: UpcomingViewPresenterProtocol {
+    func getData(upComing: [Title]?) {
+        self.upComing = upComing
+        tableView.reloadData()
     }
 }

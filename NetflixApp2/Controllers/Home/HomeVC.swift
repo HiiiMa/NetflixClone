@@ -7,27 +7,28 @@
 
 import UIKit
 
+protocol HomeViewProtocol: AnyObject {
+    func setupHeaderView()
+}
+
 final class HomeVC: UIViewController {
-    private let presenter = HomeViewPresenter()
+    
+    private var presenter: HomeViewPresenterProtocol!
  
     @IBOutlet private weak var tableView: UITableView!
     //MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called right before the view is add to it's view hierarchy
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        ConfigureNavBar()
+        presenter = HomeViewPresenter(view: self)
         presenter.getData()
+        ConfigureNavBar()
         setupHeaderView()
     }
 }
 
 private extension HomeVC {
-    func setupHeaderView() {
-        let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
-        let model = presenter.headerViewImage ?? ""
-        headerView.configure(with: model)
-        tableView.tableHeaderView = headerView
-    }
+   
     func setupView() {
         //when passing a cell:- Create a nib then pass the nib to the register instead of "HomeCell.self"
         let nib = UINib(nibName: String(describing: HomeCell.self), bundle: nil)
@@ -91,11 +92,11 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return presenter.sectionTitles.count
+        return sectionTitles.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return presenter.sectionTitles[section]
+        return sectionTitles[section]
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -116,5 +117,15 @@ extension HomeVC: HomeCellDelegate{
         let vc = storyboard.instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
         vc.movieData = model
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension HomeVC: HomeViewProtocol {
+    func setupHeaderView() {
+        let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        let model = presenter.headerViewImage ?? ""
+        headerView.configure(with: model)
+        tableView.tableHeaderView = headerView
+        tableView.reloadData()
     }
 }
