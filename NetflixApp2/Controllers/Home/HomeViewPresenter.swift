@@ -31,13 +31,13 @@ class HomeViewPresenter {
     //MARK: Variables for API Data:
     private var view: HomeViewPresenterProtocol?
     private let dispatchGroup = DispatchGroup()
-    var trendingMovies: [Title]?
-    var trendingTv: [Title]?
-    var popular: [Title]?
-    var upComming: [Title]?
-    var topRated: [Title]?
-    var randomMovie: String?
-    var headerViewImage: String?
+    private var trendingMovies: [Title]?
+    private var trendingTv: [Title]?
+    private var popular: [Title]?
+    private var upComming: [Title]?
+    private var topRated: [Title]?
+    private var randomMovie: String?
+    private var headerViewImage: String?
     
    
     
@@ -50,7 +50,7 @@ class HomeViewPresenter {
         getData()
     }
     
-    func getData() {
+    private func getData() {
         dispatchGroup.enter()
         getTrendingMovies { movies in
             self.view?.getTrendingMovies(titles: movies)
@@ -83,7 +83,7 @@ class HomeViewPresenter {
         }
     }
     
-    func getTrendingMovies(completion: @escaping ([Title]) -> Void) {
+    private func getTrendingMovies(completion: @escaping ([Title]) -> Void) {
         APICaller.shared.getTrendingMovies { [weak self] result in
             guard let self else{return}
             switch result {
@@ -97,7 +97,7 @@ class HomeViewPresenter {
         }
     }
     
-    func getTrendingTv(completion: @escaping ([Title]) -> Void){
+    private func getTrendingTv(completion: @escaping ([Title]) -> Void){
         APICaller.shared.getTrendingTvs { [weak self] result in
             guard let self else{return}
             switch result {
@@ -111,7 +111,7 @@ class HomeViewPresenter {
         }
     }
     
-    func getPopular(completion: @escaping ([Title]) -> Void){
+    private func getPopular(completion: @escaping ([Title]) -> Void){
         APICaller.shared.getPopular { [weak self] result in
             guard let self else{return}
             switch result {
@@ -125,7 +125,7 @@ class HomeViewPresenter {
         }
     }
     
-    func getUpComming(completion: @escaping ([Title]) -> Void){
+    private func getUpComming(completion: @escaping ([Title]) -> Void){
         APICaller.shared.getUpcomingMovies { [weak self] result in
             guard let self else{return}
             switch result {
@@ -138,7 +138,7 @@ class HomeViewPresenter {
             }
         }
     }
-    func getTopRated(completion: @escaping ([Title]) -> Void){
+    private func getTopRated(completion: @escaping ([Title]) -> Void){
         APICaller.shared.getTopRated { [weak self] result in
             guard let self else{return}
             switch result {
