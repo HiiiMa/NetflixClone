@@ -41,9 +41,6 @@ extension PreviewVC: previewViewPresenterProtocol{
     }
 }
 extension PreviewVC{
-    func delay(seconds: Double, completion: @escaping () -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: completion)
-    }
     @objc func showSwiftLoader() {
         var config : SwiftLoader.Config = SwiftLoader.Config()
         config.size = 170

@@ -34,7 +34,6 @@ final class UpcomingVC: UIViewController {
         tableView.dataSource = self
         tableView.reloadData()
     }
-    
 }
 
 extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {

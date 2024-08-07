@@ -15,9 +15,7 @@ protocol previewViewPresenterProtocol: AnyObject {
 }
 class PreviewViewPresenter {
     private weak var view: previewViewPresenterProtocol?
-    //MARK: movieData is a public variable to get and object of type Title when a cell is tapped, the cell passes the object to the view controller and the view controller passes it when instantiating a new view controller of PreviewVC, then this object passess some of it's data to the "model" variable.
     private let title: Title
-    //MARK: after getting some of the data from movieData and apicall is made to get the videoElement, then we call configure to fill up the outlets.
     private var model: TitlePreviewModel?
     
     init(view: previewViewPresenterProtocol? = nil, model: Title) {
@@ -27,7 +25,9 @@ class PreviewViewPresenter {
     func viewDidLoad(){
         getMovie()
     }
-    
+    private func delay(seconds: Double, completion: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: completion)
+    }
     private func getMovie(){
         SwiftLoader.show(animated: true)
         APICaller.shared.getMovie(with: (title.original_title ?? title.original_name ?? "" ) + " trailer") { [weak self] result in
@@ -43,9 +43,9 @@ class PreviewViewPresenter {
             case .failure(let error):
                 DispatchQueue.main.async{[weak self] in
                     guard self != nil else{return }
-                    //self?.delay(seconds: 0.7) { () -> () in
+                    self?.delay(seconds: 0.7) { () -> () in
                         SwiftLoader.hide()
-                    //}
+                    }
                 }
                 print(error.localizedDescription)
             }

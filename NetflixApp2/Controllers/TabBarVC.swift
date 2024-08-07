@@ -14,10 +14,8 @@ class TabBarVC: UITabBarController {
         setUpUI()
         
     }
-
     
     func setUpUI(){
-        //view.backgroundColor = .systemYellow
         
         let HomeView = UINavigationController(rootViewController: HomeVC())
         let Upcoming = UINavigationController(rootViewController: UpcomingVC())

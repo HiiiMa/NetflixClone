@@ -14,7 +14,6 @@ class TestCollectionCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     public func configure(with model: String) {

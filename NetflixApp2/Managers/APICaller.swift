@@ -114,7 +114,6 @@ class APICaller {
                 do {
                     let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
                     completion(.success(results.results))
-                    
                 } catch {
                     completion(.failure(APIError.failedToGetData))
                 }
@@ -131,7 +130,6 @@ class APICaller {
                 do {
                     let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
                     completion(.success(results.results))
-                    
                 } catch {
                     completion(.failure(APIError.failedToGetData))
                 }
@@ -150,7 +148,6 @@ class APICaller {
                 do {
                     let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
                     completion(.success(results.results))
-                    
                 } catch {
                     completion(.failure(APIError.failedToGetData))
                 }
@@ -161,7 +158,6 @@ class APICaller {
     }
     func getMovie(with query: String, completion: @escaping (Result<VideoElement, Error>) -> Void) {
         
-        
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
         guard let url = URL(string: "\(Constants.YoutubeBaseURL)q=\(query)&key=\(Constants.YoutubeAPI_KEY)") else {return}
         AF.request(url).responseData{ response in
@@ -169,10 +165,7 @@ class APICaller {
             case .success(let data):
                 do {
                     let results = try JSONDecoder().decode(YoutubeSearchResponse.self, from: data)
-                    
                     completion(.success(results.items[0]))
-                    
-                    
                 } catch {
                     completion(.failure(error))
                     print(error.localizedDescription)

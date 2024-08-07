@@ -98,7 +98,11 @@ extension SearchVC {
     /// Returns a list of titles matching given query
     /// Logical Error, search results is wrong
     func filteredTitles(query: String) -> [Title] {
-        return discover?.filter { ($0.original_title!).range(of: searchBar.text ?? "", options: [.caseInsensitive, .diacriticInsensitive] ) != nil || (($0.overview!).range(of: searchBar.text ?? "", options: [.caseInsensitive, .diacriticInsensitive] ) != nil) || (($0.release_date!).range(of: searchBar.text ?? "", options: [.caseInsensitive, .diacriticInsensitive] ) != nil)} ?? []
+        return discover?.filter {
+            ($0.original_title!).range(of: searchBar.text ?? "", options: [.caseInsensitive, .diacriticInsensitive] ) != nil ||
+            (($0.overview!).range(of: searchBar.text ?? "", options: [.caseInsensitive, .diacriticInsensitive] ) != nil) ||
+            (($0.release_date!).range(of: searchBar.text ?? "", options: [.caseInsensitive, .diacriticInsensitive] ) != nil)
+            } ?? []
     }
 }
 
