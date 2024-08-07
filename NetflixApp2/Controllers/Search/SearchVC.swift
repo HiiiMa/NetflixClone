@@ -69,7 +69,8 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         let model = searchedResults[indexPath.row]
         let storyBoard = UIStoryboard(name: "PreviewVC", bundle: Bundle.main)
         let vc = storyBoard.instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
-        vc.movieData = model
+        let presnter = PreviewViewPresenter(view: vc, model: model)
+        vc.presenter = presnter
         navigationController?.pushViewController(vc, animated: true)
     }
 

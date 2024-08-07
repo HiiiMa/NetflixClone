@@ -8,7 +8,6 @@
 import UIKit
 
 final class HomeVC: UIViewController {
-    
     private var presenter: HomeViewPresenter?
     private var trendingMovies: [Title]?
     private var trendingTv: [Title]?
@@ -116,7 +115,8 @@ extension HomeVC: HomeCellDelegate{
     func homeCellDidTapCell(model: Title) {
         let storyboard = UIStoryboard(name: "PreviewVC", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
-        vc.movieData = model
+        let presenter = PreviewViewPresenter(view: vc, model: model)
+        vc.presenter = presenter
         navigationController?.pushViewController(vc, animated: true)
     }
 }

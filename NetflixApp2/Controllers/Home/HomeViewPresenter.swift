@@ -33,11 +33,8 @@ class HomeViewPresenter {
     private let dispatchGroup = DispatchGroup()
     private var headerViewImage: String?
     
-   
-    
     init(view: HomeViewPresenterProtocol?) {
         self.view = view
-
     }
     
     func viewDidLoad(){
@@ -78,8 +75,7 @@ class HomeViewPresenter {
     }
     
     private func getTrendingMovies(completion: @escaping ([Title]) -> Void) {
-        APICaller.shared.getTrendingMovies { [weak self] result in
-            guard let self else{return}
+        APICaller.shared.getTrendingMovies { result in
             switch result {
             case .success(let titles):
                 completion(titles)
@@ -91,8 +87,7 @@ class HomeViewPresenter {
     }
     
     private func getTrendingTv(completion: @escaping ([Title]) -> Void){
-        APICaller.shared.getTrendingTvs { [weak self] result in
-            guard let self else{return}
+        APICaller.shared.getTrendingTvs {  result in
             switch result {
             case .success(let titles):
                 completion(titles)
@@ -104,8 +99,7 @@ class HomeViewPresenter {
     }
     
     private func getPopular(completion: @escaping ([Title]) -> Void){
-        APICaller.shared.getPopular { [weak self] result in
-            guard let self else{return}
+        APICaller.shared.getPopular { result in
             switch result {
             case .success(let titles):
                 completion(titles)
@@ -117,8 +111,7 @@ class HomeViewPresenter {
     }
     
     private func getUpComming(completion: @escaping ([Title]) -> Void){
-        APICaller.shared.getUpcomingMovies { [weak self] result in
-            guard let self else{return}
+        APICaller.shared.getUpcomingMovies { result in
             switch result {
             case .success(let titles):
                 completion(titles)
@@ -129,8 +122,7 @@ class HomeViewPresenter {
         }
     }
     private func getTopRated(completion: @escaping ([Title]) -> Void){
-        APICaller.shared.getTopRated { [weak self] result in
-            guard let self else{return}
+        APICaller.shared.getTopRated { result in
             switch result {
             case .success(let titles):
                 completion(titles)
