@@ -217,9 +217,9 @@
 		C9D3B7312C4F907D00229418 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C9D3B7402C4FAA3C00229418 /* HeaderView.swift */,
 				C9D3B73C2C4FA15100229418 /* HomeCell.swift */,
 				C9D3B73D2C4FA15100229418 /* HomeCell.xib */,
-				C9D3B7402C4FAA3C00229418 /* HeaderView.swift */,
 				C9D3B7422C4FB82D00229418 /* TestCollectionCell.swift */,
 				C9D3B7432C4FB82D00229418 /* TestCollectionCell.xib */,
 				C9711C012C5263450083A737 /* UpcomingCell.swift */,

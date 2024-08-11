@@ -23,7 +23,6 @@ final class HomeVC: UIViewController {
         presenter = HomeViewPresenter(view: self)
         presenter?.viewDidLoad()
         ConfigureNavBar()
-        //setupHeaderView()
     }
 }
 
