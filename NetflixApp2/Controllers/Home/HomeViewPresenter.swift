@@ -17,7 +17,7 @@ enum Sections: Int {
 }
 
 let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
-
+//MARK: - This protocol performs Interface dependancy injection: making the view conforms and getting the "service/data" it depend on.
 protocol HomeViewPresenterProtocol {
     func getTrendingMovies(titles: [Title])
     func getTrendingTv(titles: [Title])
@@ -25,6 +25,8 @@ protocol HomeViewPresenterProtocol {
     func getUpComming(titles: [Title])
     func getTopRated(titles: [Title])
     func setupHeaderView(headerViewImage: String?)
+    func showLoadingView()
+    func hideLoadingView()
 }
 
 class HomeViewPresenter {
@@ -43,27 +45,32 @@ class HomeViewPresenter {
     
     private func getData() {
         dispatchGroup.enter()
-        getTrendingMovies { titles in
-            self.view?.getTrendingMovies(titles: titles)
-            self.headerViewImage = titles.first?.poster_path ?? ""
-            self.dispatchGroup.leave()
+        view?.showLoadingView()
+        getTrendingMovies { [weak self] titles in
+            self?.view?.getTrendingMovies(titles: titles)
+            self?.headerViewImage = titles.first?.poster_path ?? ""
+            self?.dispatchGroup.leave()
         }
         dispatchGroup.enter()
+        view?.showLoadingView()
         getTrendingTv { titles in
             self.view?.getTrendingTv(titles: titles)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
+        view?.showLoadingView()
         getPopular { titles in
             self.view?.getPopular(titles: titles)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
+        view?.showLoadingView()
         getUpComming { titles in
             self.view?.getUpComming(titles: titles)
             self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
+        view?.showLoadingView()
         getTopRated { titles in
             self.view?.getTopRated(titles: titles )
             self.dispatchGroup.leave()
@@ -71,6 +78,7 @@ class HomeViewPresenter {
         dispatchGroup.notify(queue: .main) { [weak self] in
             guard let self else {return }
             self.view?.setupHeaderView(headerViewImage: headerViewImage)
+            self.view?.hideLoadingView()
         }
     }
     

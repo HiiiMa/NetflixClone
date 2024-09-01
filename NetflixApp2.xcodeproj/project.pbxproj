@@ -19,6 +19,9 @@
 		C9711C002C525D110083A737 /* UpcomingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9711BFE2C525D110083A737 /* UpcomingVC.xib */; };
 		C9711C032C5263450083A737 /* UpcomingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9711C012C5263450083A737 /* UpcomingCell.swift */; };
 		C9711C042C5263450083A737 /* UpcomingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9711C022C5263450083A737 /* UpcomingCell.xib */; };
+		C98D89042C835A38005367AF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D89032C835A38005367AF /* LoadingView.swift */; };
+		C98D89062C835A9B005367AF /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C98D89052C835A9B005367AF /* LoadingView.xib */; };
+		C98D89092C835BD0005367AF /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D89082C835BD0005367AF /* Loadable.swift */; };
 		C9D13A102C60DA58001E1FB3 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D13A0F2C60DA58001E1FB3 /* HomeViewPresenter.swift */; };
 		C9D13A142C60F728001E1FB3 /* UpcomingViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D13A132C60F728001E1FB3 /* UpcomingViewPresenter.swift */; };
 		C9D13A172C62499C001E1FB3 /* SearchViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D13A162C62499C001E1FB3 /* SearchViewPresenter.swift */; };
@@ -57,6 +60,9 @@
 		C9711BFE2C525D110083A737 /* UpcomingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpcomingVC.xib; sourceTree = "<group>"; };
 		C9711C012C5263450083A737 /* UpcomingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingCell.swift; sourceTree = "<group>"; };
 		C9711C022C5263450083A737 /* UpcomingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpcomingCell.xib; sourceTree = "<group>"; };
+		C98D89032C835A38005367AF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		C98D89052C835A9B005367AF /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
+		C98D89082C835BD0005367AF /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
 		C9D13A0F2C60DA58001E1FB3 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C9D13A132C60F728001E1FB3 /* UpcomingViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewPresenter.swift; sourceTree = "<group>"; };
 		C9D13A162C62499C001E1FB3 /* SearchViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewPresenter.swift; sourceTree = "<group>"; };
@@ -115,6 +121,14 @@
 				EBCDCFDE15E02CED6F954F27 /* Pods_NetflixApp2.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C98D89072C835BC1005367AF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				C98D89082C835BD0005367AF /* Loadable.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		C9D13A112C60DAEE001E1FB3 /* Home */ = {
@@ -178,6 +192,7 @@
 		C9D3B70B2C4F8FED00229418 /* NetflixApp2 */ = {
 			isa = PBXGroup;
 			children = (
+				C98D89072C835BC1005367AF /* Utils */,
 				C9D3B7332C4F90C700229418 /* Resources */,
 				C9D3B7322C4F908700229418 /* Managers */,
 				C9D3B7312C4F907D00229418 /* Views */,
@@ -224,6 +239,8 @@
 				C9D3B7432C4FB82D00229418 /* TestCollectionCell.xib */,
 				C9711C012C5263450083A737 /* UpcomingCell.swift */,
 				C9711C022C5263450083A737 /* UpcomingCell.xib */,
+				C98D89032C835A38005367AF /* LoadingView.swift */,
+				C98D89052C835A9B005367AF /* LoadingView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -325,6 +342,7 @@
 				C92E05572C58EDE0007AE20D /* PreviewVC.storyboard in Resources */,
 				C9D3B7142C4F8FED00229418 /* Base in Resources */,
 				C9D3B73E2C4FA15100229418 /* HomeCell.xib in Resources */,
+				C98D89062C835A9B005367AF /* LoadingView.xib in Resources */,
 				C94533322C56503500A3D919 /* SearchVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,6 +401,8 @@
 				C9D13A102C60DA58001E1FB3 /* HomeViewPresenter.swift in Sources */,
 				C9D3B7452C4FB82D00229418 /* TestCollectionCell.swift in Sources */,
 				C9D3B7112C4F8FED00229418 /* TabBarVC.swift in Sources */,
+				C98D89092C835BD0005367AF /* Loadable.swift in Sources */,
+				C98D89042C835A38005367AF /* LoadingView.swift in Sources */,
 				C9D3B7272C4F903700229418 /* Title.swift in Sources */,
 				C9D3B7292C4F903F00229418 /* Extensions.swift in Sources */,
 				C92E05542C58E900007AE20D /* TitlePreviewModel.swift in Sources */,

@@ -59,8 +59,7 @@ extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
         let model = upComing![indexPath.row]
         let storyboard = UIStoryboard(name: "PreviewVC", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
-        let presnter = PreviewViewPresenter(view: vc, model: model)
-        vc.presenter = presnter
+        vc.model = model
         navigationController?.pushViewController(vc, animated: true)
     }
 }

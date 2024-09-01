@@ -36,7 +36,7 @@ class HomeCell: UITableViewCell {
     }
 }
 
-extension HomeCell: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+extension HomeCell: UICollectionViewDelegate ,UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         titles.count
     }
@@ -57,6 +57,6 @@ extension HomeCell: UICollectionViewDelegate,UICollectionViewDataSource,UICollec
     }
 // This Function can setup collectionView layout using UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,              sizeForItemAt indexPath: IndexPath) -> CGSize {
-            .init(width: 60, height: 90)
+            .init(width: 120, height: 180)
         }
 }

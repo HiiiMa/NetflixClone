@@ -8,16 +8,21 @@ import WebKit
 import UIKit
 import SwiftLoader
 
-final class PreviewVC: UIViewController {
+final class PreviewVC: UIViewController, Loadable {
     
+    lazy var loadingView = LoadingView.initToView(webView)
+
     @IBOutlet private weak var webView: WKWebView!
     @IBOutlet private weak var movieTitle: UILabel!
     @IBOutlet private weak var preview: UILabel!
     @IBOutlet private weak var downloadButton: UIButton!
     
-    var presenter: PreviewViewPresenter?
+    private var presenter: PreviewViewPresenter?
+    var model: Title?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = PreviewViewPresenter(view: self, model: model!)
         showSwiftLoader()
         presenter?.viewDidLoad()
         setupUI()

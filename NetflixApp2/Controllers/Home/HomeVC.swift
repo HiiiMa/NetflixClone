@@ -7,13 +7,14 @@
 
 import UIKit
 
-final class HomeVC: UIViewController {
+final class HomeVC: UIViewController, Loadable {
     private var presenter: HomeViewPresenter?
     private var trendingMovies: [Title]?
     private var trendingTv: [Title]?
     private var popular: [Title]?
     private var upComming: [Title]?
     private var topRated: [Title]?
+    lazy var loadingView = LoadingView.initToView(tableView)
     
     @IBOutlet private weak var tableView: UITableView!
     //MARK: This is the life cycle method for the view controller. ViewDidLoad is only called once, while viewWillApear is called right before the view is add to it's view hierarchy
@@ -53,6 +54,7 @@ private extension HomeVC {
     }
 }
 extension HomeVC: UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -114,8 +116,7 @@ extension HomeVC: HomeCellDelegate{
     func homeCellDidTapCell(model: Title) {
         let storyboard = UIStoryboard(name: "PreviewVC", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "PreviewVC") as! PreviewVC
-        let presenter = PreviewViewPresenter(view: vc, model: model)
-        vc.presenter = presenter
+        vc.model = model
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -154,13 +155,14 @@ extension HomeVC: HomeViewPresenterProtocol {
     }
     
     func getTrendingMovies(titles: [Title]) {
-        DispatchQueue.main.async{[weak self] in
+        DispatchQueue.main.async{ [weak self] in
             guard self != nil else{return }
             self?.topRated = titles
             self?.tableView.reloadData()
             }
     }
     func setupHeaderView(headerViewImage: String?) {
+        showLoadingView()
         let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         headerView.configure(with: headerViewImage ?? "")
         tableView.tableHeaderView = headerView

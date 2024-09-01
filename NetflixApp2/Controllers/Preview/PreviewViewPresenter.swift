@@ -12,12 +12,14 @@ protocol previewPassingProtocol: AnyObject {
 }
 protocol previewViewPresenterProtocol: AnyObject {
     func configure(model: TitlePreviewModel?)
+    func showLoadingView()
+    func hideLoadingView()
 }
 class PreviewViewPresenter {
     private weak var view: previewViewPresenterProtocol?
     private let title: Title
     private var model: TitlePreviewModel?
-    
+//MARK: - This init performs Init dependancy injection: passing the "service/data" the view depends on.
     init(view: previewViewPresenterProtocol? = nil, model: Title) {
         self.view = view
         self.title = model
@@ -29,7 +31,8 @@ class PreviewViewPresenter {
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: completion)
     }
     private func getMovie(){
-        SwiftLoader.show(animated: true)
+       // SwiftLoader.show(animated: true)
+        view?.showLoadingView()
         APICaller.shared.getMovie(with: (title.original_title ?? title.original_name ?? "" ) + " trailer") { [weak self] result in
             switch result {
             case .success(let videoElement):
@@ -38,13 +41,14 @@ class PreviewViewPresenter {
                 DispatchQueue.main.async{[weak self] in
                     guard let self else{return }
                     view?.configure(model: model)
-                    SwiftLoader.hide()
+                    view?.hideLoadingView()
+                   // SwiftLoader.hide()
                 }
             case .failure(let error):
-                DispatchQueue.main.async{[weak self] in
+                DispatchQueue.main.async{ [weak self] in
                     guard self != nil else{return }
                     self?.delay(seconds: 0.7) { () -> () in
-                        SwiftLoader.hide()
+                        //SwiftLoader.hide()
                     }
                 }
                 print(error.localizedDescription)
