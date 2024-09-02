@@ -127,41 +127,26 @@ extension HomeVC: HomeViewPresenterProtocol {
     }
     
     func getPopular(titles: [Title]) {
-        DispatchQueue.main.async{[weak self] in
-            guard self != nil else{return }
-            self?.trendingMovies = titles
-            self?.tableView.reloadData()
-            }
+       trendingMovies = titles
     }
     
     func getUpComming(titles: [Title]) {
-        DispatchQueue.main.async{[weak self] in
-            guard self != nil else{return }
-            self?.popular = titles
-            self?.tableView.reloadData()
-            }
+        popular = titles
     }
     
     func getTopRated(titles: [Title]) {
-        DispatchQueue.main.async{[weak self] in
-            guard self != nil else{return }
-            self?.upComming = titles
-            self?.tableView.reloadData()
-            }
+        upComming = titles
     }
     
     func getTrendingMovies(titles: [Title]) {
-        DispatchQueue.main.async{ [weak self] in
-            guard self != nil else{return }
-            self?.topRated = titles
-            self?.tableView.reloadData()
-            }
+        topRated = titles
     }
     func setupHeaderView(headerViewImage: String?) {
         showLoadingView()
         let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         headerView.configure(with: headerViewImage ?? "")
         tableView.tableHeaderView = headerView
+        hideLoadingView()
         tableView.reloadData()
     }
 }

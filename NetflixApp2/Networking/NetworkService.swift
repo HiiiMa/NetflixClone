@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 protocol NetworkServiceProtocol {
-    func fetchMovies(route: EventRouter,completion: @escaping ([Title]) -> ()) async throws
+    func fetchMovies(route: EventRouter) async -> [Title]
 }
 
 class BaseNetworkService<Router: URLRequestConvertible> {
@@ -47,15 +47,22 @@ class BaseNetworkService<Router: URLRequestConvertible> {
 }
 
 class NetworkService: BaseNetworkService<EventRouter>, NetworkServiceProtocol {
-    func fetchMovies(route: EventRouter,completion: @escaping ([Title]) -> ()) async throws {
-         request(router: route) { result in
-            switch result {
-            case .success(let titles):
-                completion(titles)
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion([])
+    func fetchMovies(route: EventRouter) async -> [Title] {
+       // Perform the asynchronous request (you will likely use URLSession or some other async API)
+        do{
+            return try await withCheckedThrowingContinuation { continuation in
+                // This is your existing network call with a completion handler
+                request(router: route) { result in
+                    switch result {
+                    case .success(let titles):
+                        continuation.resume(returning: titles)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
             }
+        }catch {
+            return []
         }
     }
 }

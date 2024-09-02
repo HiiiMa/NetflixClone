@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NetworkRepositoryProtocol {
-    func fetchMovies(route: EventRouter) async throws -> [Title]
+    func fetchMovies(route: EventRouter) async  -> [Title]
 }
 
 class NetworkRepository: NetworkRepositoryProtocol {
@@ -19,10 +19,8 @@ class NetworkRepository: NetworkRepositoryProtocol {
         self.networkService = networkService
     }
     
-    func fetchMovies(route: EventRouter) async throws -> [Title] {
-        try await networkService.fetchMovies(route: route) {[weak self] titles in
-            self?.movies = titles
-        }
-        return movies
+    func fetchMovies(route: EventRouter) async  -> [Title] {
+        let titles =  await networkService.fetchMovies(route: route)
+        return titles
     }
 }

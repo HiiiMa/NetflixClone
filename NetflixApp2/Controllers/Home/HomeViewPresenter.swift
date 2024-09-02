@@ -36,7 +36,11 @@ class HomeViewPresenter {
     private let dispatchGroup = DispatchGroup()
     private let dispatchQueue = DispatchQueue(label: "movies", qos: .userInitiated)
     private var headerViewImage: String?
-    private var movies: [Title] = []
+    private var trendingMovies: [Title] = []
+    private var trendingTv: [Title] = []
+    private var popular: [Title] = []
+    private var upComming: [Title] = []
+    private var topRated: [Title] = []
     
     init(view: HomeViewPresenterProtocol?) {
         self.view = view
@@ -46,111 +50,25 @@ class HomeViewPresenter {
         getData()
     }
     
-    func serviceFunc() async {
-        do {
-            movies = try await networkRepository.fetchMovies(route: .trendingMovies)
-            print(movies)
-        } catch {
-            print(error)
-        }
+    func getAllMovies() async {
+        trendingMovies = await networkRepository.fetchMovies(route: .trendingMovies)
+        trendingTv = await networkRepository.fetchMovies(route: .trendingTvs)
+        popular = await networkRepository.fetchMovies(route: .popular)
+        upComming = await networkRepository.fetchMovies(route: .upcomingMovies)
+        topRated = await networkRepository.fetchMovies(route: .topRated)
     }
     
     private func getData() {
-        Task { await serviceFunc() }
-        view?.getTrendingTv(titles: movies)
-        dispatchGroup.enter()
-        view?.showLoadingView()
-        getTrendingMovies { [weak self] titles in
-            self?.view?.getTrendingMovies(titles: titles)
-            self?.headerViewImage = titles.first?.poster_path ?? ""
-            self?.dispatchGroup.leave()
-        }
-//        dispatchGroup.enter()
-//        view?.showLoadingView()
-//        getTrendingTv { titles in
-//            self.view?.getTrendingTv(titles: titles)
-//            self.dispatchGroup.leave()
-//        }
-        dispatchGroup.enter()
-        view?.showLoadingView()
-        getPopular { titles in
-            self.view?.getPopular(titles: titles)
-            self.dispatchGroup.leave()
-        }
-        dispatchGroup.enter()
-        view?.showLoadingView()
-        getUpComming { titles in
-            self.view?.getUpComming(titles: titles)
-            self.dispatchGroup.leave()
-        }
-        dispatchGroup.enter()
-        view?.showLoadingView()
-        getTopRated { titles in
-            self.view?.getTopRated(titles: titles )
-            self.dispatchGroup.leave()
-        }
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            guard let self else {return }
-            self.view?.setupHeaderView(headerViewImage: headerViewImage)
-            self.view?.hideLoadingView()
-        }
-    }
-    
-    private func getTrendingMovies(completion: @escaping ([Title]) -> Void) {
-        APICaller.shared.getTrendingMovies { result in
-            switch result {
-            case .success(let titles):
-                completion(titles)
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion([])
-            }
-        }
-    }
-    
-    private func getTrendingTv(completion: @escaping ([Title]) -> Void){
-        APICaller.shared.getTrendingTvs {  result in
-            switch result {
-            case .success(let titles):
-                completion(titles)
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion([])
-            }
-        }
-    }
-    
-    private func getPopular(completion: @escaping ([Title]) -> Void){
-        APICaller.shared.getPopular { result in
-            switch result {
-            case .success(let titles):
-                completion(titles)
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion([])
-            }
-        }
-    }
-    
-    private func getUpComming(completion: @escaping ([Title]) -> Void){
-        APICaller.shared.getUpcomingMovies { result in
-            switch result {
-            case .success(let titles):
-                completion(titles)
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion([])
-            }
-        }
-    }
-    private func getTopRated(completion: @escaping ([Title]) -> Void){
-        APICaller.shared.getTopRated { result in
-            switch result {
-            case .success(let titles):
-                completion(titles)
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion([])
+        Task {
+            await getAllMovies()
+            await MainActor.run {
+                view?.getTrendingMovies(titles: trendingMovies)
+                headerViewImage = trendingMovies.first?.poster_path ?? ""
+                view?.getTrendingTv(titles: trendingTv)
+                view?.getPopular(titles: popular)
+                view?.getUpComming(titles: upComming)
+                view?.getTopRated(titles: topRated)
+                view?.setupHeaderView(headerViewImage: headerViewImage)
             }
         }
     }
