@@ -22,6 +22,9 @@
 		C98D89042C835A38005367AF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D89032C835A38005367AF /* LoadingView.swift */; };
 		C98D89062C835A9B005367AF /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C98D89052C835A9B005367AF /* LoadingView.xib */; };
 		C98D89092C835BD0005367AF /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D89082C835BD0005367AF /* Loadable.swift */; };
+		C98D890C2C849A6C005367AF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D890B2C849A6C005367AF /* NetworkService.swift */; };
+		C98D890E2C849A74005367AF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D890D2C849A74005367AF /* Router.swift */; };
+		C98D89102C849A8D005367AF /* NetwrokRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D890F2C849A8D005367AF /* NetwrokRepository.swift */; };
 		C9D13A102C60DA58001E1FB3 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D13A0F2C60DA58001E1FB3 /* HomeViewPresenter.swift */; };
 		C9D13A142C60F728001E1FB3 /* UpcomingViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D13A132C60F728001E1FB3 /* UpcomingViewPresenter.swift */; };
 		C9D13A172C62499C001E1FB3 /* SearchViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D13A162C62499C001E1FB3 /* SearchViewPresenter.swift */; };
@@ -63,6 +66,9 @@
 		C98D89032C835A38005367AF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		C98D89052C835A9B005367AF /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		C98D89082C835BD0005367AF /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
+		C98D890B2C849A6C005367AF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		C98D890D2C849A74005367AF /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		C98D890F2C849A8D005367AF /* NetwrokRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetwrokRepository.swift; sourceTree = "<group>"; };
 		C9D13A0F2C60DA58001E1FB3 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C9D13A132C60F728001E1FB3 /* UpcomingViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewPresenter.swift; sourceTree = "<group>"; };
 		C9D13A162C62499C001E1FB3 /* SearchViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewPresenter.swift; sourceTree = "<group>"; };
@@ -131,6 +137,17 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		C98D890A2C849A2E005367AF /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				C9D3B7212C4F902900229418 /* APICaller.swift */,
+				C98D890D2C849A74005367AF /* Router.swift */,
+				C98D890B2C849A6C005367AF /* NetworkService.swift */,
+				C98D890F2C849A8D005367AF /* NetwrokRepository.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		C9D13A112C60DAEE001E1FB3 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +209,7 @@
 		C9D3B70B2C4F8FED00229418 /* NetflixApp2 */ = {
 			isa = PBXGroup;
 			children = (
+				C98D890A2C849A2E005367AF /* Networking */,
 				C98D89072C835BC1005367AF /* Utils */,
 				C9D3B7332C4F90C700229418 /* Resources */,
 				C9D3B7322C4F908700229418 /* Managers */,
@@ -248,7 +266,6 @@
 		C9D3B7322C4F908700229418 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				C9D3B7212C4F902900229418 /* APICaller.swift */,
 				C9D3B7202C4F902900229418 /* DataPersistenceManager.swift */,
 			);
 			path = Managers;
@@ -397,16 +414,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9D3B7262C4F903700229418 /* YoutubeSearchResponse.swift in Sources */,
+				C98D89102C849A8D005367AF /* NetwrokRepository.swift in Sources */,
 				C94533372C569CB300A3D919 /* PreviewVC.swift in Sources */,
 				C9D13A102C60DA58001E1FB3 /* HomeViewPresenter.swift in Sources */,
 				C9D3B7452C4FB82D00229418 /* TestCollectionCell.swift in Sources */,
 				C9D3B7112C4F8FED00229418 /* TabBarVC.swift in Sources */,
+				C98D890C2C849A6C005367AF /* NetworkService.swift in Sources */,
 				C98D89092C835BD0005367AF /* Loadable.swift in Sources */,
 				C98D89042C835A38005367AF /* LoadingView.swift in Sources */,
 				C9D3B7272C4F903700229418 /* Title.swift in Sources */,
 				C9D3B7292C4F903F00229418 /* Extensions.swift in Sources */,
 				C92E05542C58E900007AE20D /* TitlePreviewModel.swift in Sources */,
 				C9D3B7222C4F902900229418 /* DataPersistenceManager.swift in Sources */,
+				C98D890E2C849A74005367AF /* Router.swift in Sources */,
 				C9D3B70D2C4F8FED00229418 /* AppDelegate.swift in Sources */,
 				C9D13A172C62499C001E1FB3 /* SearchViewPresenter.swift in Sources */,
 				C9D3B7232C4F902900229418 /* APICaller.swift in Sources */,

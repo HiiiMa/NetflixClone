@@ -66,6 +66,7 @@
                     </view>
                     <connections>
                         <outlet property="downloadButton" destination="z23-3N-EXh" id="PvG-aY-6bs"/>
+                        <outlet property="mainView" destination="5EZ-qb-Rvc" id="G2F-gg-dIf"/>
                         <outlet property="movieTitle" destination="KZ6-4h-CUL" id="ro8-3v-GS5"/>
                         <outlet property="preview" destination="cKg-z7-MQi" id="y4g-rQ-3iC"/>
                         <outlet property="webView" destination="sph-Cn-ggG" id="3hS-WJ-Y47"/>

@@ -123,17 +123,13 @@ extension HomeVC: HomeCellDelegate{
 
 extension HomeVC: HomeViewPresenterProtocol {
     func getTrendingTv(titles: [Title]) {
-        DispatchQueue.main.async{[weak self] in
-            guard self != nil else{return }
-            self?.trendingMovies = titles
-            self?.tableView.reloadData()
-            }
+        trendingTv = titles
     }
     
     func getPopular(titles: [Title]) {
         DispatchQueue.main.async{[weak self] in
             guard self != nil else{return }
-            self?.trendingTv = titles
+            self?.trendingMovies = titles
             self?.tableView.reloadData()
             }
     }

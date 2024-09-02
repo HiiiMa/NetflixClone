@@ -32,8 +32,11 @@ protocol HomeViewPresenterProtocol {
 class HomeViewPresenter {
     //MARK: Variables for API Data:
     private var view: HomeViewPresenterProtocol?
+    private let networkRepository = NetworkRepository(networkService: NetworkService())
     private let dispatchGroup = DispatchGroup()
+    private let dispatchQueue = DispatchQueue(label: "movies", qos: .userInitiated)
     private var headerViewImage: String?
+    private var movies: [Title] = []
     
     init(view: HomeViewPresenterProtocol?) {
         self.view = view
@@ -43,7 +46,18 @@ class HomeViewPresenter {
         getData()
     }
     
+    func serviceFunc() async {
+        do {
+            movies = try await networkRepository.fetchMovies(route: .trendingMovies)
+            print(movies)
+        } catch {
+            print(error)
+        }
+    }
+    
     private func getData() {
+        Task { await serviceFunc() }
+        view?.getTrendingTv(titles: movies)
         dispatchGroup.enter()
         view?.showLoadingView()
         getTrendingMovies { [weak self] titles in
@@ -51,12 +65,12 @@ class HomeViewPresenter {
             self?.headerViewImage = titles.first?.poster_path ?? ""
             self?.dispatchGroup.leave()
         }
-        dispatchGroup.enter()
-        view?.showLoadingView()
-        getTrendingTv { titles in
-            self.view?.getTrendingTv(titles: titles)
-            self.dispatchGroup.leave()
-        }
+//        dispatchGroup.enter()
+//        view?.showLoadingView()
+//        getTrendingTv { titles in
+//            self.view?.getTrendingTv(titles: titles)
+//            self.dispatchGroup.leave()
+//        }
         dispatchGroup.enter()
         view?.showLoadingView()
         getPopular { titles in

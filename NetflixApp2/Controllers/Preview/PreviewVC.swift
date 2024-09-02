@@ -10,8 +10,9 @@ import SwiftLoader
 
 final class PreviewVC: UIViewController, Loadable {
     
-    lazy var loadingView = LoadingView.initToView(webView)
+    lazy var loadingView = LoadingView.initToView(mainView)
 
+    @IBOutlet var mainView: UIView!
     @IBOutlet private weak var webView: WKWebView!
     @IBOutlet private weak var movieTitle: UILabel!
     @IBOutlet private weak var preview: UILabel!
