@@ -9,38 +9,28 @@ import Foundation
 import UIKit
 
 enum Sections: Int {
-    case TrendingMovies = 0
-    case TrendingTv = 1
-    case Popular = 2
-    case Upcoming = 3
-    case TopRated = 4
+    case trendingMovies = 0
+    case trendingTvs = 1
+    case popular = 2
+    case upcomingMovies = 3
+    case topRated = 4
 }
 
 let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
+
 //MARK: - This protocol performs Interface dependancy injection: making the view conforms and getting the "service/data" it depend on.
 protocol HomeViewPresenterProtocol {
-    func getTrendingMovies(titles: [Title])
-    func getTrendingTv(titles: [Title])
-    func getPopular(titles: [Title])
-    func getUpComming(titles: [Title])
-    func getTopRated(titles: [Title])
+    func getMovies(titles: [Title], section: Sections)
     func setupHeaderView(headerViewImage: String?)
     func showLoadingView()
     func hideLoadingView()
 }
 
 class HomeViewPresenter {
-    //MARK: Variables for API Data:
     private var view: HomeViewPresenterProtocol?
     private let networkRepository = NetworkRepository(networkService: NetworkService())
-    private let dispatchGroup = DispatchGroup()
-    private let dispatchQueue = DispatchQueue(label: "movies", qos: .userInitiated)
     private var headerViewImage: String?
-    private var trendingMovies: [Title] = []
-    private var trendingTv: [Title] = []
-    private var popular: [Title] = []
-    private var upComming: [Title] = []
-    private var topRated: [Title] = []
+    private var movies: [Title] = []
     
     init(view: HomeViewPresenterProtocol?) {
         self.view = view
@@ -49,27 +39,33 @@ class HomeViewPresenter {
     func viewDidLoad(){
         getData()
     }
-    
+}
+//MARK: - API:
+private extension HomeViewPresenter {
     func getAllMovies() async {
-        trendingMovies = await networkRepository.fetchMovies(route: .trendingMovies)
-        trendingTv = await networkRepository.fetchMovies(route: .trendingTvs)
-        popular = await networkRepository.fetchMovies(route: .popular)
-        upComming = await networkRepository.fetchMovies(route: .upcomingMovies)
-        topRated = await networkRepository.fetchMovies(route: .topRated)
+        movies = await networkRepository.fetchMovies(route: .trendingMovies)
+        await MainActor.run {
+            view?.getMovies(titles: movies, section: .trendingMovies)
+            headerViewImage = movies.first?.poster_path ?? ""
+        }
+        
+        movies = await networkRepository.fetchMovies(route: .trendingTvs)
+        await MainActor.run { view?.getMovies(titles: movies, section: .trendingTvs) }
+        
+        movies = await networkRepository.fetchMovies(route: .popular)
+        await MainActor.run { view?.getMovies(titles: movies, section: .popular) }
+        
+        movies = await networkRepository.fetchMovies(route: .upcomingMovies)
+        await MainActor.run { view?.getMovies(titles: movies, section: .upcomingMovies) }
+        
+        movies = await networkRepository.fetchMovies(route: .topRated)
+        await MainActor.run {
+            view?.getMovies(titles: movies, section: .topRated)
+            view?.setupHeaderView(headerViewImage: headerViewImage)
+        }
     }
     
-    private func getData() {
-        Task {
-            await getAllMovies()
-            await MainActor.run {
-                view?.getTrendingMovies(titles: trendingMovies)
-                headerViewImage = trendingMovies.first?.poster_path ?? ""
-                view?.getTrendingTv(titles: trendingTv)
-                view?.getPopular(titles: popular)
-                view?.getUpComming(titles: upComming)
-                view?.getTopRated(titles: topRated)
-                view?.setupHeaderView(headerViewImage: headerViewImage)
-            }
-        }
+    func getData() {
+        Task { await getAllMovies() }
     }
 }

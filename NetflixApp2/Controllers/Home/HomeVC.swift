@@ -68,19 +68,19 @@ extension HomeVC: UITableViewDelegate,UITableViewDataSource {
         cell.delegate = self
         
         switch indexPath.section {
-        case Sections.TrendingMovies.rawValue:
+        case Sections.trendingMovies.rawValue:
             cell.configure(with: trendingMovies ?? [])
             return cell
-        case Sections.TrendingTv.rawValue:
+        case Sections.trendingTvs.rawValue:
             cell.configure(with: trendingTv ?? [])
             return cell
-        case Sections.Popular.rawValue:
+        case Sections.popular.rawValue:
             cell.configure(with: popular ?? [])
             return cell
-        case Sections.Upcoming.rawValue:
+        case Sections.upcomingMovies.rawValue:
             cell.configure(with: upComming ?? [])
             return cell
-        case Sections.TopRated.rawValue:
+        case Sections.topRated.rawValue:
             cell.configure(with: topRated ?? [])
             return cell
         default:
@@ -122,25 +122,21 @@ extension HomeVC: HomeCellDelegate{
 }
 
 extension HomeVC: HomeViewPresenterProtocol {
-    func getTrendingTv(titles: [Title]) {
-        trendingTv = titles
+    func getMovies(titles: [Title], section: Sections ) {
+        switch section {
+        case .trendingMovies:
+            trendingMovies = titles
+        case .trendingTvs:
+            trendingTv = titles
+        case .popular:
+            popular = titles
+        case .upcomingMovies:
+            upComming = titles
+        case .topRated:
+            topRated = titles
+        }
     }
     
-    func getPopular(titles: [Title]) {
-       trendingMovies = titles
-    }
-    
-    func getUpComming(titles: [Title]) {
-        popular = titles
-    }
-    
-    func getTopRated(titles: [Title]) {
-        upComming = titles
-    }
-    
-    func getTrendingMovies(titles: [Title]) {
-        topRated = titles
-    }
     func setupHeaderView(headerViewImage: String?) {
         showLoadingView()
         let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
